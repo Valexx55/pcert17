@@ -1,0 +1,121 @@
+//MÉTODO DE ConcurrentMap en colecciones
+putIfAbsent (k, v) ---hace el put sií esa k no está asociada ya a un valor
+
+
+//existe la java.nio.file.AccessDeniedException!!!
+
+//en los métodos, existe herencia y ser puede sobreescribir
+//un atributo se hereda, pero no puede sobreescribirse
+
+//puedes declarar tantas clases como quieras en un mismo archivo. el requisito es que
+//sólo haya una declarada como pública y coincida con el nombre del fichero
+
+//x = y--;  primero se asigna, después se decrementa. x es mayor que y después de la ejecución
+//Una interfaz puede definir métodos estáticos con una implementación dada
+//etiqueta: código java. Puedes referir a esa etiqueta pero fuera de la sección indicada por la etiqueta /dentro de otra
+//long, float, duble, and boolean NO PUEDEN USARSE NUNCA COMO VARIABLE Switch
+//para poder empaquetar las librerías en unnódulo primero hay que hacerlas modulares
+//no es recomendable, pero se puede hacer por linea de comandos qué paquetes un módulo exporta
+//si un módulo quiere leer de otro módulo pero sólo temporalmente, puede indicarlo por línea de comandos
+//ANOTACIONES Y SEGURIDAD ESTÁN FUERA DE LOS CONTENIDOS DEL EXAMEN
+//se puede tener una sección de código entre llaves, sin ningún if / else asociado
+//Path.subpath te da las rutas limias (sin c:\\ ni \ finales) sólo intermedia f\salida 
+
+//STREAMS el método 
+//public void process(String name, Double value){     
+groupedValues.computeIfAbsent(name, (a)->new ArrayList<Double>()).add(value); 
+}
+//computeIfAbsent llama a la función anónima si esa clave (name) no está en el mapa
+//y le asocia el valor retornado por la función, devolviendo ese valor (una lista nueva en este caso)
+//si ya está asociado esa clave a un valor, devuelve el valor (una lista usada en ese caso)
+
+//PREPAREDSTATEMENT adimte tipos blob clob (cosa que statement no)
+//además es más eficiente q statement si se se repite la ejecución con distintos parámetros
+
+//STREAMS findAny método no determinsta que devuelve aletatoriamente cualquiera. La aleatoriedad es algo pretendido
+
+//NIO el método Path.resolve(string) te devuelve la ruta completa donde está ese fichero precedido con \ruta\string.pdf
+
+//INTERFACES una clase no puede heredar el mismo metodo (cabecera) de dos Interfaces distintas.
+
+//INTERFACEs una propiedad declarada en una interfaz es final publica y estática (aunque esos modificadores no acompañen la definición)
+//por tanto, una subclase de la interfaz no puede modicar una propiedad de esa interfaz.
+
+//JDBC Prepared Statement uso de parámetros a nullo, con setNull (posicion, tipo) el tipo de jdbc.Types.
+//sipasas por ejemplo un enterto así setInt (3, int) y ése int es null, fallarás, porque irá a acceder a un valor nulo al casterarlo de Interger a int
+
+//el clásico ejemplo de ECI de lista de notas de un alumno, pues eso, en una sóla linea 
+
+
+//LINEA COMANDOS : jdeps Clase y te lista todos los paquetes dependientes/usados
+
+//HERENCIA ?
+//si delcaro List<? extends Number> estoy diciendo que quiero una lista de Numbers (del subtipo que sea)
+//si delcaro List<? super Number> estoy diciendo que quiero una lista de Numbers o de un SUPERtipo de Numbers
+//ojo con la diferencia!!!
+
+//MÓDULOS SERVICELOADER implementa Iterable
+
+//MÓDULOS UN módulo exporta sólo paquetes!!!
+//MÓDULOS SERVICE loader
+//module foo.filter
+{   requires api;   
+provides api.Filter with foo.DoNothingFilter; }
+
+debe haber una clase DoNothingFilter que o bien implemente Filter
+y tenga los métodos que allí se declaran implementados y además un constructor por defecto
+con 0 argumentos
+
+o bien la clase DoNothingFilter tiene un método public static provider que devuelve una instanacia de Filter
+que incluye la implementación del método de la interfaz
+
+//MÓDULOS 
+no puedes usar* como comodin para directorios
+javac --module-source-path src -d out src/foo.bar/*/*.java
+
+cuando usas javac con --module-source-path o --module 
+debes especificar el directorio de salida con -d!
+y si usas módulos 
+
+//EXCEPCIONES
+catch(NoSuchFileException|IOException|AccessDeniedException e)
+{ e.printStackTrace(); }
+
+INCORRECTO porque no puedes incluir excepciones en el mismo bloque
+catch que estén en relación de herencia NoSuch y Access heredan de IOException en este caso
+
+
+//EXCEPCIONES TRY-CON RECURSOS
+
+En el siguiente trozo de código, este TWR es incorrecto porque debe declararse
+stmt dentro del try de tipo try (Statement stmt = c.create...)
+
+Statement stmt = null;
+Connection c = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
+try(stmt = c.createStatement();)
+
+
+En Java 9, se modificó el TCR porlo que también vale un stmt final/ final efectivo
+con sólo una asginacación, como este
+
+Statement stmt = c.createStatement(); 
+try(stmt) { } //esto valdría
+pero no es el caso
+
+
+//MÓDULOS
+con module-path indco donde están las clases para el entorno de ejecución del módulo
+//puedo añadir módulos a entornos de ejecución de módulos ya compilados con esa opción
+
+también con --module-source-path puedo añadir todo el código depedendiente y así 
+compilar el módulo con todo lo necesario, sin necesidad de usar el comando anterior
+
+//COLEECIONES
+
+copyOf y ListOf son métodos estáticos que no admiten nulos como parámetros: lanzan excepción
+ojo porque además ambos métodos devulven listas NO modificables- cualquier método de añadir, elimnar
+modificar da fallo UnsuportedOperationException 
+
+//TIPOS BÁSICOS JAVA -STRINGS
+ el método isBlank devuelve tru si la cadena está vacía o contiene todo espacios blancos
+

@@ -1,0 +1,23 @@
+Your application is packaged in myapp.jar and depends on a jar named datalayer.jar, 
+which in turn depends on mysql-connector-java-8.0.11.jar.  
+
+You have modularized myapp without waiting for datalayer and mysql driver to be modularized 
+and the following are the contents of myapp's module-info:  
+
+module abc.myapp{   requires datalayer; }  
+
+Assming that com.abc.myapp.Main is the main class of your application that you want to execute,
+which of the following commands will successfully launch your application?
+
+
+//FUNCIONA! (A LA ANTIGUA TB VALE)
+java -classpath mysql-connector-java-8.0.11.jar;datalayer.jar;myapp.jar com.abc.myapp.Main
+//FALLA, FALTA EL NOMBRE DEL MÓDULO DELANTE DE LA CLASE EJECUTABLE Y EL -M
+java -module-path mysql-connector-java-8.0.11.jar;datalayer.jar;myapp.jar com.abc.myapp.Main
+//FALLA, FALTA EL NOMBRE DEL MÓDULO DELANTE DE LA CLASE EJECUTABLE
+java -p mysql-connector-java-8.0.11.jar;datalayer.jar;myapp.jar -m com.abc.myapp.Main
+//FUNCIONA EL MODO ABREVIADO/MODERNO MÁS CORRECTO
+java -p mysql-connector-java-8.0.11.jar;datalayer.jar;myapp.jar -m abc.myapp/com.abc.myapp.Main
+//FUNCIONA UN JAR NO MODULAR SE CONVIERTE AUTOMÁTICAMENTE EN UN MÓDULO
+//CP ES CLASSPATH
+java -cp mysql-connector-java-8.0.11.jar -p datalayer.jar;myapp.jar -m abc.myapp/com.abc.myapp.Main

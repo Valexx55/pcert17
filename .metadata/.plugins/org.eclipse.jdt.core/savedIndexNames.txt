@@ -1,0 +1,3 @@
+INDEX VERSION 1.131+C:\Users\valer\Documents\CERTIFICACION JAVA\codigos\.metadata\.plugins\org.eclipse.jdt.core
+2312866022.index
+3501714628.index
