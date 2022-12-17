@@ -1,0 +1,9 @@
+
+//PATH NIO
+
+1) Path.subpath te da las rutas limpias sin c:\\ ni \ finales 
+   sólo intermedias pej: f\salida 
+   
+2) Path.resolve(string) te devuelve la ruta completa donde está ese fichero,
+   precedido con \ruta\string.pdf
+

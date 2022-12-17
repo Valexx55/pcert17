@@ -1,0 +1,12 @@
+//COLEECIONES
+
+1) List.copyOf y List.of son métodos factoría estáticos que no admiten nulos como 
+parámetros. En caso de recibir algún nulo, lanzan una excepción
+
+Ojo porque además estos métodos devulven listas NO modificables - cualquier método de
+añadir, elimnar o modificar provoca fallo UnsuportedOperationException 
+
+--------------------------------------------------------------------
+--------------------------------------------------------------------
+
+2) Map.putIfAbsent (k, v) -> hace el put si esa k no está asociada ya a un valor

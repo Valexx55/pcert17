@@ -1,0 +1,13 @@
+
+//ETIQUETAS LABELS
+
+1) Puedes referir a esa etiqueta pero fuera de la sección indicada por la 
+   etiqueta/dentro de otra
+   
+-------------------------------------------------------------------------
+-------------------------------------------------------------------------
+
+//SECCIONES BLOQUES
+
+1) Puedes definir una secció de código entre llaves ({}) sin ningún if/else asociado!
+   - y se ejecutaría siempre -

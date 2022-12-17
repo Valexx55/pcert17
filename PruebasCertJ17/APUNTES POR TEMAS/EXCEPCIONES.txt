@@ -1,0 +1,27 @@
+//TRY-CON RECURSOS
+
+1) En el siguiente trozo de código, este TWR es incorrecto porque debe declararse
+stmt dentro del try de tipo try (Statement stmt = c.create...)
+
+	Statement stmt = null;
+	Connection c = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
+	try(stmt = c.createStatement();)
+
+
+En Java 9, se modifica el TWR y también es válido un stmt final/ final efectivo
+con solo una asignación a este
+
+	Statement stmt = c.createStatement(); 
+	try(stmt) { } //esto esto valdría, pero no es el caso
+	
+----------------------------------------------------------
+----------------------------------------------------------
+
+//EXCEPCIONES
+
+1) Existe la java.nio.file.AccessDeniedException!!!
+
+2) catch(NoSuchFileException|IOException|AccessDeniedException e) --> INCORRECTO
+
+	No puedes incluir excepciones en el mismo bloque catch que guarden relación
+	de herencia: NoSuch y Access heredan de IOException en este caso

@@ -1,0 +1,35 @@
+//STREAMS
+
+1) Map.computeIfAbsent(name, (a)->new ArrayList<Double>()).add(value); 
+
+	computeIfAbsent llama a la función anónima si esa clave (name) no está en el mapa
+	y le asocia el valor retornado por la función, devolviendo ese valor 
+	(una lista nueva en este caso)
+
+	si ya esta asociado esa clave a un valor, devuelve el valor 
+	(una lista "usada" en ese caso) a la que añade un valor
+
+	computeIfAbsent va a devolver o bien el valor asociado a la clave (name)
+	o bien el que genere la función anónima si esa clave no existía
+	
+	rdo: el clásico ejemplo de ECI de agrupar lista de notas de un alumno, 
+	pues eso, en una sola linea 
+	
+	
+2) Stream.findAny es un método no determinsta que devuelve aletatoriamente 
+   cualquier elemento del flujo.
+    
+   De hecho La aleatoriedad es algo pretendido
+   como anécdota, es una operación intermedia tipo short-circuit
+   porque dado un stream largo o infinito, no tiene pq procesarlo entero
+   
+3) Pipeline - tubería : Normalmente un Stream es el chorro, seguido de operaciones
+   intermadias, seguido de una operación final.
+
+
+4) Hay operaciones sin estado (statelss) y con estado (statefull)
+   Las primeras permiten agurpar operaciones internedias y tratarse con complejida
+   o(1), al permitir concurrencia...no importa cada entrada anterior
+   
+   Las segundas, pueden requerir varias pasadas o esperar a procesar todo 
+   (ordenar, pej)

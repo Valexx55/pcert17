@@ -1,0 +1,57 @@
+
+//MÓDULOS
+
+1) Para poder empaquetar las librerías en un módulo primero hay que hacerlas modulares
+
+
+2) No es recomendable, pero se puede decir por linea de comandos qué paquetes 
+   un módulo exporta -mejor en el module-info.java-
+   
+3) javac --module-source-path src -d out src/foo.bar/*/*.java 
+
+   ¡¡INCORRECTO!! --> no puedes usar comodín (*) en los directorios
+
+4) javac --module-source-path o --module debe especificar el directorio de 
+   salida con -d
+   
+5) module-path me permite indicar el path para ejecutar ese módulo (donde están 
+   las clases necesarias /referenciadas en el entorno ) para la ejecución del módulo
+   
+   Tb puedo añadir módulos ya compilados a entornos de ejecución con esa opción
+ 
+	5.1) Tb con --module-source-path puedo añadir todo el código depedendiente 
+	y así compilar el módulo con todo lo necesario, sin necesidad de usar el 
+	comando anterior
+	
+6) si un Módulo usa otro módulo pero sólo temporalmente, puede indicarlo 
+   por línea de comandos
+   
+7) Un módulo exporta sólo paquetes
+  
+ ---------------------------------------------------------------------------
+ ---------------------------------------------------------------------------
+   
+//SERVICE LOADER
+ 
+ 1) ServiceLoader implementa Iterable!!
+ 
+ 2) Dado este module-info
+	
+	module foo.filter
+		{   
+		 requires api;   
+		 provides api.Filter with foo.DoNothingFilter; 
+		}
+
+
+	Debe haber una clase DoNothingFilter que o bien implemente Filter
+    -e implmente todos los métodos y ademáss un constructor por defecto con 0 argumentos-
+
+	O bien la clase DoNothingFilter tiene un método 
+		
+		public static provider Filter
+	
+	que devuelve una instanacia de Filter que incluye 
+	la implementación de toda la interfaz
+
+ 

@@ -1,0 +1,19 @@
+
+//PREPARED STATEMENT
+
+1) VENTAJAS DE PSt sobre St
+	
+	-Adimten tipos blob clob (cosa que statement no)
+	
+	-Son más eficiente q st si se se repite la ejecución con distintos parámetros
+	(tiene lógica pq la instrucción ya estaría intrepretada mayormente)
+	
+2) Uso de parámetros a nullo, 
+  
+  	- con setNull (posicion, tipo) el tipo debe ser del enumerado jdbc.Types.
+	
+	- si pasas por ejemplo un enterto setInt (3, int) y ése int es null, 
+	fallará porque irá a acceder a un valor nulo al intentar convertirlo
+	de Interger a int
+
+		

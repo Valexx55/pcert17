@@ -1,0 +1,30 @@
+//STRINGS
+
+1) El método isBlank devuelve true si la cadena está vacía o contiene 
+todo espacios blancos
+
+
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+
+//CLASES ESTRUCTURA
+
+1) Puedes declarar tantas clases como quieras en un mismo archivo. El requisito es 
+que sólo haya una declarada como pública y coincida con el nombre del fichero
+
+
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+
+//OPERADORES
+
+1) x = y--;  Primero se asigna. Después se decrementa. 
+			 x es mayor que y después de la ejecución de esa instrucción
+
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+			 
+			 
+//SWITCH
+
+1) long, float, duoble, and boolean NO PUEDEN USARSE NUNCA como variable Switch(v)
