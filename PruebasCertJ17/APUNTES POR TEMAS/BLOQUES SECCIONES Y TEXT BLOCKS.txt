@@ -11,3 +11,12 @@
 
 1) Puedes definir una secció de código entre llaves ({}) sin ningún if/else asociado!
    - y se ejecutaría siempre -
+   
+2) Una método puede declarar dos variables locales con el mismo nombre
+   ej:
+   	
+   	void twoVars() {
+ 	 	{ int i = 0; }
+  		{ int i = 1; } // OK
+	}
+	

@@ -27,6 +27,10 @@
    por línea de comandos
    
 7) Un módulo exporta sólo paquetes
+
+8) El módulo java.base es implícitamente importado en cada módulo que yo cree
+
+9) El paquete java.lang pertenece al módulo java.base
   
  ---------------------------------------------------------------------------
  ---------------------------------------------------------------------------

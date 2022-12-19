@@ -6,7 +6,24 @@ parámetros. En caso de recibir algún nulo, lanzan una excepción
 Ojo porque además estos métodos devulven listas NO modificables - cualquier método de
 añadir, elimnar o modificar provoca fallo UnsuportedOperationException 
 
---------------------------------------------------------------------
---------------------------------------------------------------------
+2) Hay métodos que crean vistas (bridging, views o backed) que en realidad
+apuntan a la lista de orginal (no son nuevas listas)
 
-2) Map.putIfAbsent (k, v) -> hace el put si esa k no está asociada ya a un valor
+	con los métodos 1), se crean nuevas listas (que no se pueden modificar)
+	
+	con Arrays.asList - crea una lista a partir de un array.
+		la lista apunta a las mismas posiciones
+		se puede modificar todo, menos el tamaño!
+		
+	con Collections.unmodifiableList
+		Se crea la misma vista
+		apunta a las mismas posiciones
+		pero sólo para leer - no se puede modificar
+	 
+	con List.sublist [posi, posf);
+		Se crea la misma vista
+		las mimas posiciones [) 
+		puedes hacer cualquier operación
+
+3) Map.putIfAbsent (k, v) -> hace el put si esa k no está asociada ya a un valor
+
