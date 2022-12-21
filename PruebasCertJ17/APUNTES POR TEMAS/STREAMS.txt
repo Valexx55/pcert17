@@ -33,3 +33,39 @@
    
    Las segundas, pueden requerir varias pasadas o esperar a procesar todo 
    (ordenar, pej)
+   
+ 5) Si una operación intermedia (como sorted) no va seguida de una final, ni se ejecuta
+ 
+ 6) Si no asignas las operaciones de un Stream a otro o Lista/Colección, la lista
+ 	colección original (backing source) no se modifica realmente - su estado -
+ 	
+ 7) Si usas una referencia a un método, no puedes hcaerlo con los argumentos y flecha
+ 
+ 		a -> Integer::toHexString -- INCORRECTO! - no es posible inferir que a sea el 
+ 		argumento con el que opera toHexString
+
+ 		Integer::toHexString -- CORRECTO!
+
+		(a)-> Integer.toHexString(a) -- CORRECTO!
+		
+8) Los stream se recorren/crean secuencial (normal) o paralelos (parallelStream)
+   Puede alterrarse el orden sobre la marcha con .parallel o .sequential
+   Oracle no documenta qué pasa en ese supuesto, pero se puede
+   
+   Por tanto, esto es correcto
+   
+   		Stream<Integer> strm2 = strm1.parallel().filter(i->i>5).filter(i->i<15).sequential();
+   		
+9) java.lang.IllegalStateException: stream has already been operated upon or closed
+   No puedo reusar/recorrer dos veces un Stream :S
+   
+10) strm1.collect(Collectors.partitioningBy(i->{ return i>5 && i<15; }));
+    este método de vuelve un Map con clave boolean y lista de valores
+    asociados clasificados según si cumplen el criterio o no
+    
+    si del mapa hago get(true), me estaré quedando con todos los valores
+    que cumplen la condición 
+    
+    collect es una Operación Terminal y reduce el Stream
+    se le llama mutable reduction operation porque se crea realmente una nueva lista
+    con ese stream, sobre el que se puede operar.
