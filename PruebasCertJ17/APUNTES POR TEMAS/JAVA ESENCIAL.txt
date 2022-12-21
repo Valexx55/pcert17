@@ -3,6 +3,12 @@
 1) El m√©todo isBlank devuelve true si la cadena est√° vac√≠a o contiene 
 todo espacios blancos
 
+2) Strings son imutables: si le cambias el valor, se crear automatÌcamente una variable nueva, perservando la orignal
+   Esto hace de evitar modificaciones en datos pasados por par·metros
+   
+   Hacer una clase final evita que pueda heredarse de ella y por tanto, redefinir
+   mÈtodos y atributos que pudieran alterar el estado del objeto padre, indirectamente.
+
 
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
