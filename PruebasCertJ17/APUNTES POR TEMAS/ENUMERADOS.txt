@@ -1,0 +1,13 @@
+//ENUMERADOS
+
+1) Cuando defines un enumerado, los tipos que lo componen Instancias del tipo
+
+2) No puedes heredar de un enumerado
+
+3) S/e puedes declarar un método abstratacto en el enum y que cada clase/tipo 
+   lo sobreescriba dentro de sí. (raro, pero vero Type)
+
+4) No puedes sobreescribir equals en un enumerado
+
+5) Una instancia de enum NO es inmutable (puede cambiar su estado/valor) sin declararse
+   uno nuevo.
