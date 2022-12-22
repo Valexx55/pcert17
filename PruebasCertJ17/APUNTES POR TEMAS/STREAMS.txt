@@ -25,10 +25,18 @@
    
 3) Pipeline - tubería : Normalmente un Stream es el chorro, seguido de operaciones
    intermadias, seguido de una operación final.
+   
+   Las operaciones intermedias son siempre vagas. Es decir, van de uno en uno, 
+   creando un chorro nuevo (stream) con lo que va saliendo 
+   
+   filter-map-sum se puede hacer de una sola pasada por los datos
+   
+   3.1) casi todas las operaciones finales son EAGER:
+   		completan el recorrido del chorro antes de devolver el resultado
 
 
 4) Hay operaciones sin estado (statelss) y con estado (statefull)
-   Las primeras permiten agurpar operaciones internedias y tratarse con complejida
+   Las primeras permiten agurpar operaciones intermedias y tratarse con complejida
    o(1), al permitir concurrencia...no importa cada entrada anterior
    
    Las segundas, pueden requerir varias pasadas o esperar a procesar todo 
@@ -69,3 +77,7 @@
     collect es una Operación Terminal y reduce el Stream
     se le llama mutable reduction operation porque se crea realmente una nueva lista
     con ese stream, sobre el que se puede operar.
+    
+11) el método Stream.allMatch (predicado):boolean es una operación terminal y cortocircuito
+    es decir, que puede procesar todo un stream o solo un elemento si ya le vale para
+    determinar su decisión.

@@ -27,3 +27,51 @@ apuntan a la lista de orginal (no son nuevas listas)
 
 3) Map.putIfAbsent (k, v) -> hace el put si esa k no está asociada ya a un valor
 
+4) El uso de Genéricos, hace que evites castings y que asegures en tiempo de compilación
+   que hay concordancia de tipos (cosa que no pasa con Object)
+   
+
+5) OjO ? SUPER extends
+
+	si delcaro List<? extends Number> estoy diciendo que quiero una lista de Numbers
+	(del subtipo que sea)
+	
+	si delcaro List<? super Number> estoy diciendo que quiero una lista de Numbers
+	 o de un SUPERtipo de Numbers
+
+	<<Por eso que List<? super Number> sería un subtipo de List<? super Integer> -->>
+
+6) List<Integer> NO es una List<Object> 
+   List<Integer> SÍ es una List <? extends Number>
+   List<Integer> SÍ es una List <?> 
+   List<Integer> NO es una List <? super Number>
+   (ver jcp17.herencia.PruebaInstaceOfGenericos)	
+   
+7) En realidad, los genéricos están pensados para expresar relaciones entre tipos
+   de parámetros de entrada y salida. Si no se da, mejor usar wildcard comodín y listo
+   para permitir poliformismo
+   
+   Es preferible ? si no tiene dependecias con otro tipo devuelto
+   
+   
+   public static <T, S extends T> void copy(List<T> dest, List<S> src) BIEN
+   public static <T, ? extends T> void copy(List<T> dest, List<?> src) MÁS CORRECTO
+ 	
+8) Box<Integer> integerBox = new Box<>(); // esto se permite desde J7
+   dejas que el compilador infiera el tipo sin poner new Box<Integer>
+   y se le llama DIAMOND diamante <>
+   
+9) Convenciones en el nombrado de parámetros
+
+	E - Element (used extensively by the Java Collections Framework)
+	K - Key
+	N - Number
+	T - Type
+	V - Value
+	S,U,V etc. - 2nd, 3rd, 4th types
+	
+10) Nomenclatura cabecera método con genéricos
+
+	<T, S> T funcion (Collection<S>)
+	
+

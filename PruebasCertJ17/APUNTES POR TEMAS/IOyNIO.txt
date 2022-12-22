@@ -7,3 +7,14 @@
 2) Path.resolve(string) te devuelve la ruta completa donde está ese fichero,
    precedido con \ruta\string.pdf
 
+3) Path.releativize (p) te da una ruta relativa desde la cual se representa p
+   respecto de Path
+   
+   primero la ruta normaliza y luego se relativiza
+   
+   ambas (Path y p) deben tener // c:// en su definición para que funciones
+   
+   Path p1 = Paths.get("photos/goa");         
+   Path p2 = Paths.get("/index.html");         
+   Path p3 = p1.relativize(p2);    -- FALLO! IllegalArgumentException      
+   System.out.println(p3);

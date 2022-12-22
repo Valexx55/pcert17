@@ -10,14 +10,3 @@ aunque no lo ponga, y por tanto no puede sobrrescribirse
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 
-//HERENCIA
-
-1) OjO ? SUPER extends
-
-	si delcaro List<? extends Number> estoy diciendo que quiero una lista de Numbers
-	(del subtipo que sea)
-	
-	si delcaro List<? super Number> estoy diciendo que quiero una lista de Numbers
-	 o de un SUPERtipo de Numbers
-
-	<<Por eso que List<? super Number> sería un subtipo de List<? super Integer> -->>

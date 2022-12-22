@@ -31,6 +31,16 @@
 8) El módulo java.base es implícitamente importado en cada módulo que yo cree
 
 9) El paquete java.lang pertenece al módulo java.base
+
+10) Para modulizar un jar que ya existe, basta con añadir el fichero module-info.java
+    debidamente
+    
+11) --module-path para las clases compiladas / jar
+    --module-source-path para el código fuente en modulos
+
+12) Si usas module-info, debes importar con require modulos como java.sql
+	que entiendo están fuera de java.base- entiendo-
+	si no, no hace falta (accedes a todo)
   
  ---------------------------------------------------------------------------
  ---------------------------------------------------------------------------
@@ -49,7 +59,7 @@
 
 
 	Debe haber una clase DoNothingFilter que o bien implemente Filter
-    -e implmente todos los métodos y ademáss un constructor por defecto con 0 argumentos-
+    -e implmente todos los métodos y además un constructor por defecto con 0 argumentos-
 
 	O bien la clase DoNothingFilter tiene un método 
 		
@@ -58,4 +68,5 @@
 	que devuelve una instanacia de Filter que incluye 
 	la implementación de toda la interfaz
 
+3) ServiceLoader tiene el método iterator() pero No services()
  

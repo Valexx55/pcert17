@@ -1,0 +1,7 @@
+//CALLABLE
+
+1) INTERFAZ callable 
+
+	public interface Callable<V>{   
+  		V call() throws Exception; 	-- ha de devolver el mismo tipo que el valor
+	} 								-- parametrizado

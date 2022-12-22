@@ -4,8 +4,21 @@
 todo espacios blancos
 
 
----------------------------------------------------------------------
----------------------------------------------------------------------
+//FINAL
+
+	final aplicado a atributos provoca que no pueda modicarse el valor una vez asignado
+
+	final aplicado a clases hacen que de esa clase no pueda heredarse
+
+	final aplicado a métodos hacen que no puedan sobreescribirse
+
+	En los casos de clases y métodos se persigue facilitar la inmutabilidad
+	(que subclases no se pueda modificar el estado de un objeto sin que
+	se cree uno nuevo)
+	
+// NOMENCLATURA
+
+	desde Java 9 no puede usarse el guión bajo sólo como identificador ("_")
 
 //CLASES ESTRUCTURA
 
@@ -64,3 +77,8 @@ Integer.MAX_VALUE+1 = Integer.MIN_VALUE !! --> da la vuelta, alucina :)
 //ENUM
 
 1) No se puede extender de un enum
+
+//VAR 
+
+  for (var i=5; i=0; i--) { } -- incorrecto no puedes asignar a un var 0, porque lo
+  								toma como false

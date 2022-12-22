@@ -25,3 +25,11 @@ con solo una asignación a este
 
 	No puedes incluir excepciones en el mismo bloque catch que guarden relación
 	de herencia: NoSuch y Access heredan de IOException en este caso
+	
+3) Si tienes una clase padre que lanza IOException en el constructor
+   puedes tener una hija que lanze Exception (una más genérica) en el suyo
+   (no más específica, ojo)
+   
+   esta norma es al reves sobreescribiendo en otros métodos que no son el constructor
+   o sea, un método del hijo puede lanzar una excepción más específica que 
+   el padre, pero no más genérica 
