@@ -41,6 +41,11 @@
 12) Si usas module-info, debes importar con require modulos como java.sql
 	que entiendo estÃ¡n fuera de java.base- entiendo-
 	si no, no hace falta (accedes a todo)
+	
+13) Si tienes un JAR ordinario y en su paquete por defecto una clase
+    esa clase no se va a poder usar como un módulo automático (requires en modulo con nombre)
+    
+14) REPASAR el nombrado de módulos automáticos
   
  ---------------------------------------------------------------------------
  ---------------------------------------------------------------------------
