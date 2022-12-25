@@ -3,11 +3,11 @@
 1) El método isBlank devuelve true si la cadena está vacía o contiene 
 todo espacios blancos
 
-2) Strings son imutables: si le cambias el valor, se crear automat�camente una variable nueva, perservando la orignal
-   Esto hace de evitar modificaciones en datos pasados por par�metros
+2) Strings son imutables: si le cambias el valor, se crear automáticamente una variable nueva, perservando la orignal
+   Esto hace de evitar modificaciones en datos pasados por par�metros
    
    Hacer una clase final evita que pueda heredarse de ella y por tanto, redefinir
-   m�todos y atributos que pudieran alterar el estado del objeto padre, indirectamente.
+   métodos y atributos que pudieran alterar el estado del objeto padre, indirectamente.
 
 
 //FINAL
@@ -63,7 +63,7 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 			 
 //SWITCH
 
-1) long, float, duoble, and boolean NO PUEDEN USARSE NUNCA como variable Switch(v)
+1) long, float, double, and boolean NO PUEDEN USARSE NUNCA como variable Switch(v)
 
 
 ---------------------------------------------------------------------
