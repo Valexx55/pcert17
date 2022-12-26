@@ -5,3 +5,9 @@
 	public interface Callable<V>{   
   		V call() throws Exception; 	-- ha de devolver el mismo tipo que el valor
 	} 								-- parametrizado
+	
+2) new Thread(() -> {w1.write(d1, d2);}).start(); //válido -- lanza el método run
+
+3) deadlock : dos procesos usan recursos que se bloquean mutuamente sin hacer nada
+   livelock : igual, pero los dos procesos van cambiando de estado (analogía pasillo estrecho)
+   starvation : un proceso espera que sea él el asignado, pero nunca le toca (a los otro sí) 

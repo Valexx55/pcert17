@@ -81,3 +81,23 @@
 11) el método Stream.allMatch (predicado):boolean es una operación terminal y cortocircuito
     es decir, que puede procesar todo un stream o solo un elemento si ya le vale para
     determinar su decisión.
+    
+12) 
+    reduce(BinaryOperator<T> accumulator) : devuelve un OPTIONAL DE T
+    reduce(T identity, BinaryOperator<T> accumulator) devuelve un T
+
+13) Collectors.joining() devuelve todos los elementos de un stream juntos en uno 
+
+14) letters.stream().collect(Collectors.groupingBy(a->"")).toString();
+    List<String> letters = Arrays.asList("j", "a", "v","a");
+    System.out.println(word); // {=[j, a, v, a]}
+    
+15) UN INTERFAZ FUNCIONAL --> sÓLO UN MÉTODO ABSTRACTO (SIN IMPLEMTANAR)
+	+ VARIOS STATIC O DEFAULT CON IMPLENTACIÓN
+	
+
+	A functional interface in Java is an interface that contains only a single abstract (unimplemented)
+	method. 
+	
+	A functional interface can contain default and static methods which do have an 
+	implementation, in addition to the single unimplemented method.

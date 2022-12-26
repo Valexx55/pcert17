@@ -77,7 +77,10 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 	
 //TIPOS
 
-Integer.MAX_VALUE+1 = Integer.MIN_VALUE !! --> da la vuelta, alucina :) 
+1)Integer.MAX_VALUE+1 = Integer.MIN_VALUE !! --> da la vuelta, alucina :) 
+
+
+2) return x - 20/x + x*x; //esto se castea automácamente como un INT!!!!
 
 
 //ENUM
@@ -88,3 +91,5 @@ Integer.MAX_VALUE+1 = Integer.MIN_VALUE !! --> da la vuelta, alucina :)
 
   for (var i=5; i=0; i--) { } -- incorrecto no puedes asignar a un var 0, porque lo
   								toma como false
+  								
+  								

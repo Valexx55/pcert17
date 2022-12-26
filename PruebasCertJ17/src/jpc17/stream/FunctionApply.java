@@ -21,13 +21,19 @@ public class FunctionApply {
 		vowels.forEach(System.out::print);
 		System.out.println();
 		vowels2.forEach(System.out::print);
-		if (vowels.get(2)==vowels2.get(0))
-		{
+		if (vowels == vowels2) {
 			System.out.println("Son la misma ee, putenros. VISTAS");
 		} else {
 			System.out.println("NO Son la misma ee, putenros. VISTAS");
 		}
 
+	}
+
+	static void doElements(List l) 
+	{     
+		l.add("string"); //1    
+		System.out.println(l.get(0)); //2 
+	}
 	}
 
 }
