@@ -70,8 +70,17 @@
 		
 		public static provider Filter
 	
-	que devuelve una instanacia de Filter que incluye 
-	la implementación de toda la interfaz
+	que devuelve una instanacia de Filter (que incluye 
+	la implementación de toda la interfaz )
 
 3) ServiceLoader tiene el método iterator() pero No services()
+
+4) Al ejecutar un módulo, puede omitirse -m nombre.modulo/Clase, puesto 
+   que el manifest del Jar puede incluir el atributo Main-class	
+   
+5) --module-path puede indicarse o -p indican el DIRECTORIO o un JAR 
+   [que contiene las depedencias del módulo que desea compilarse]
+   
+6) -classpath sólo tiene sentido al compilar cuando quieres
+   que clases no modulares usen otras no modulares
  

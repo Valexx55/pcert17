@@ -7,6 +7,8 @@ aunque no lo ponga, y por tanto no puede sobrrescribirse
 
 3) Una interfaz puede definir métodos estáticos con una implementación dada
 
+4) Una interfaz puede heredar de 2 interfaces :S
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 

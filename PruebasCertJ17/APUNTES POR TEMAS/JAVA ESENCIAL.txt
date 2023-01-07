@@ -1,3 +1,12 @@
+//ARRAY
+
+1) Array.binarySearch (array, clave) :pos debe etar ordenado para que el método funcione
+
+2) Arrays.mismatch (array1, array2 ) devuelve -1 si los array que compara son oiguales o el índice
+	del primer discordante
+	
+3) Arrays.compare (a1, a2, comaparador? ) : 1, -1 , 0
+
 //STRINGS
 
 1) El método isBlank devuelve true si la cadena está vacía o contiene 
@@ -9,6 +18,9 @@ todo espacios blancos
    Hacer una clase final evita que pueda heredarse de ella y por tanto, redefinir
    métodos y atributos que pudieran alterar el estado del objeto padre, indirectamente.
 
+3) strip () -- método que quita los espacios por delante y por detrás.
+
+4) substring [) - 1º incluído 2º no incluido
 
 //FINAL
 
@@ -49,6 +61,9 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 4) Ninguna palabra clave de Java empieza por mayúscula
 
 5) Ninguna clase a top level puede declarse como protected. Sí package protected o public.
+
+6) Se pueden sobrecargar fuciones llamadas main dentro una clase siempre que se usen
+   distintos parámetros
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 
@@ -56,6 +71,10 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 
 1) x = y--;  Primero se asigna. Después se decrementa. 
 			 x es mayor que y después de la ejecución de esa instrucción
+			 
+2) Los operadores booleanos tienen más preferencia que una asginación (=)
+
+3) Existe el operador bitewise ~ (complementario, negativo- operación binaria-)
 
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
@@ -83,13 +102,35 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 2) return x - 20/x + x*x; //esto se castea automácamente como un INT!!!!
 
 
+3) n = 1000.0 -- SE INSTANCIA automáticamente como un double! (si no lleva f)
+   float n = 10 --sin embargo esto es correcto!
+   float d = 0 * 1.5;	esto incorrecto pues se hace como un double
+
+4)  byte b = 1;   char c = 1;   short s = 1;   int i = 1
+	s = b * b ; -- incorrecto devuelve un entero
+	s *= b ; -- correcto: las asginaciones compuestas hacen un casting explícito
+	
+5) si haces una división de 
+	valor = float / 0 No DA EXCEPCIÓN
+	el valor asume constante Float.POSITIVE_INFINITY or negative
+	lo cual a su vez hace que Float.isInfinite(valor) de true
+	
+6) los float tiene precisión de 6 dígits
+	si pasas de int a float, se pierde precisión
+	y al pasar otra vezde float a int, no se obtiene el mismo número
+
 //ENUM
 
 1) No se puede extender de un enum
 
 //VAR 
 
-  for (var i=5; i=0; i--) { } -- incorrecto no puedes asignar a un var 0, porque lo
+1)  for (var i=5; i=0; i--) { } -- incorrecto no puedes asignar a un var 0, porque lo
   								toma como false
+  								
+2) var n; n = 0; -- INCORRECTO! no se puede declarar var sin inicializar	
+
+3) VAR sólo puede ser usado para variables locales dentro de un método 
+  								
   								
   								

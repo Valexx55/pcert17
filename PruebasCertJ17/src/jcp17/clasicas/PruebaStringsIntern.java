@@ -19,5 +19,6 @@ public class PruebaStringsIntern {
 }
 
 //esto devuelve false true false
-//dos Strings con idéntico contenido pueden ser objetos distintos si se instancian por separado
-//el método intenr hace que si un String ya existe con ese contenido, se reasigna ese objeto (el primero de ellos además)
+//dos Strings con idï¿½ntico contenido pueden ser objetos distintos si se instancian por separado
+//el mï¿½todo intenr hace que si un String ya existe con ese contenido, se reasigna ese objeto 
+//(el primero de ellos de los que fue declarado asÃ­ ademÃ¡s)
