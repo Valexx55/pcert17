@@ -76,6 +76,36 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 
 3) Existe el operador bitewise ~ (complementario, negativo- operación binaria-)
 
+4) ++i == 0; 1 suma y luego compara
+   i++ == 0; 1 compara y luego suma
+   
+5)
+	int i = 0; int j = 1; 
+	if( (i++ == 0) & (j++ == 2) )
+	{
+			// 1 --> i = 0, true
+			// 2 --> j = 2, false
+			// LUEGO true & false --> false
+		//NUNCA SE EJECUTA
+	} else {
+		//SÍ SE EJECUTA
+	}
+	
+6) & o | siempre se ejecuta las dos partes (&& o ||) NO
+
+   con números a los lados & ejecuta la operación AND binaria (BITWISE) - operación bit a bit
+   ( 10 & 12 ) = 8 (1010 & 1100) = (1000)  
+   con boolean, es un AND lógico, pero ejecuta todas las partes 
+   |, igual, pero con OR
+   
+7) Operadores se evaluan por orden de prioridad.
+   Si tienen la misma prioridad, de izquiera a derecha
+   
+   pej: 3 + 100/10*2-13 = 10 
+   //100/10 = 10; 10*2=20; 20+3 = 23; 23 -13 = 10! 
+
+    
+
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 			 
@@ -118,6 +148,13 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 6) los float tiene precisión de 6 dígits
 	si pasas de int a float, se pierde precisión
 	y al pasar otra vezde float a int, no se obtiene el mismo número
+
+7) Si usas un número real se instancia como double a no ser que pongas float explícitamente
+
+	double amount = 1000.0; // BIEN
+	Double amount = 1000.0; // B
+	var amount = 1000.0; // B
+	float amount = 1000.0; // X MAL debería llevar f
 
 //ENUM
 

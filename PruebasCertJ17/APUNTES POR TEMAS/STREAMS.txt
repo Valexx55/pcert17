@@ -86,7 +86,7 @@
     reduce(BinaryOperator<T> accumulator) : devuelve un OPTIONAL DE T
     reduce(T identity, BinaryOperator<T> accumulator) devuelve un T
 
-13) Collectors.joining() devuelve todos los elementos de un stream juntos en uno 
+13) Collectors.joining() devuelve todos los elementos de un stream juntos en un String 
 
 14) letters.stream().collect(Collectors.groupingBy(a->"")).toString();
     List<String> letters = Arrays.asList("j", "a", "v","a");
@@ -101,3 +101,5 @@
 	
 	A functional interface can contain default and static methods which do have an 
 	implementation, in addition to the single unimplemented method.
+	
+16) max(Comparador)!!! para que funciones bien

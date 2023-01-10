@@ -33,3 +33,14 @@ con solo una asignación a este
    esta norma es al reves sobreescribiendo en otros métodos que no son el constructor
    o sea, un método del hijo puede lanzar una excepción más específica que 
    el padre, pero no más genérica 
+
+4) Si tienes varios catch asociados a un mismo try y dentro de un catch, tiras otra excepción
+   con throws, ésta no es capturada por otro catch, sino que se propaga al método llamante
+   
+5) Si tienes un T_W_R y dentro de él se lanza una excepción, ésa es la que recibe el usuario
+   S/e si se produce una expceción y luego se da una excecpión al ejecutar el autocloseable
+   el usario recibe la expección de IOexception (la del try será surprimida - supresed exception-)
+   
+6) En un T_W_R el close se invoca al final del try!!! 
+   de modo que el finally, si hay algun acceso
+  al recurso cerrado automáticamente, fallaría

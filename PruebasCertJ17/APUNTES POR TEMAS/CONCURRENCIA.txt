@@ -11,3 +11,12 @@
 3) deadlock : dos procesos usan recursos que se bloquean mutuamente sin hacer nada
    livelock : igual, pero los dos procesos van cambiando de estado (analogía pasillo estrecho)
    starvation : un proceso espera que sea él el asignado, pero nunca le toca (a los otro sí) 
+   
+4) AtomicInteger tiene métodos para añadir uno atómicamente (operación copn estado frente a hilos)
+	Por ejemplo, para sumar de a uno
+   		
+   			- AtomicInteger.addAndGet(1);
+   			- AtomicInteger.incrementAndGet();
+   			
+5) Si un método es sync y acaba con una checked exception, 
+   el bloqueo es gestioando por el hilo y liberado automáticamente 

@@ -1,0 +1,7 @@
+//LOCALIZACIÓN
+
+métodos válidos para determianr el LOCALE a la instancia de JVM
+
+ Locale.setDefault(Locale.Category.DISPLAY, Locale.US);//determina el Locale para mostrar
+ Locale.setDefault(Locale.Category.FORMAT, Locale.US);//determina el Locale para formatear
+ Locale.setDefault(Locale.US);	

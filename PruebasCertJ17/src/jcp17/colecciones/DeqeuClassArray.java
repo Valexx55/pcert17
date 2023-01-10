@@ -11,7 +11,7 @@ public class DeqeuClassArray {
 
 		//QUEE colas -> Deque FIFO
         Deque<Integer> d = new ArrayDeque<>();
-        d.push(1);//con push inserta el primero!!!! en la CIMA
+        d.push(1);//con push inserta el primero!!!! por el PRINCIPIO vs con ADD por el final
         d.push(2);
         d.push(3);
         System.out.println("primero" + d.pollFirst());

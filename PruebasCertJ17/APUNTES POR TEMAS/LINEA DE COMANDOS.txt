@@ -2,3 +2,14 @@
 
 1) jdeps -summary (-s) <Clase> 
    y te lista todos los módulos dependientes/usados por esa Clase
+   
+2) jdeps --jdk-internals
+   te lista todos las depedencias de tu código o JAR con el API Interna del JDK
+   si encuentra una depdencia, te siguiere un cambio
+   las APIs internas son clases no soportadas, privadas, que están marcadas para excluirse en
+   futuras versiones del API
+   
+   hace un análisis estático: es decir --> descubure las dependecias en compilación
+   si durante la ejecución, por reflexión, se usara alguna clase más, no es detectada
+   por este comando
+   

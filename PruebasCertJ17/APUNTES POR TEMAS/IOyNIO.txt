@@ -18,3 +18,31 @@
    Path p2 = Paths.get("/index.html");         
    Path p3 = p1.relativize(p2);    -- FALLO! IllegalArgumentException      
    System.out.println(p3);
+   
+4) Path p  = Paths.get("c:\\temp\\out"); 
+   Files.deleteIfExists(p); --devuelve 
+   true si pudo borrarlo por que era un directorio que existía  y estaba vacío
+   false si no existía
+   DirectoryNotEmptyException si existía pero estaba vacío
+   
+5)Files.copy (path1, path2, StandardCopyOption.COPY_ATTRIBUTES)
+StandardCopyOption.COPY_ATTRIBUTES
+	intenta copiar como mínimo la hora de última modificación, 
+	pero no es seguro pues depende de qué plataforma (SO) y qué atributos 
+	de cada fichero maneja
+	
+6)  var raf = new RandomAccessFile("c:\\temp\\test.txt", "rwd");
+	raf.writeChars("hello");
+	raf.close();
+	
+	Si existe el fichero, añade al principio
+	Si no, intenta crearlo	
+	
+	el 2º param es el modo de acceso, que puede ser
+	
+	
+	"r" --> sólo para leer. al intentar escribir petaría 
+	"rw" --> modo lectura escritura. si no existe, lo intenta crear
+	"rwd" --> se modifica sincronamente (el fichero real - underliying)
+	"rws" --> se modifica síncronamente hasta los metadatos
+	

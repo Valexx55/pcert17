@@ -74,4 +74,13 @@ apuntan a la lista de orginal (no son nuevas listas)
 
 	<T, S> T funcion (Collection<S>)
 	
+11) Deque es un tipo de Queue FIFO, pasa que doblemente enlazada
+
+	Deque<Integer> d = new ArrayDeque<>();
+	d.add(1);d.add(2);d.addFirst(3); //con add añade por el final, encola. con push por el principio
+	System.out.println(d.pollLast());
+	System.out.println(d.pollLast());
+	System.out.println(d.pollLast());
+	
+	imprime 2, 1, 3
 
