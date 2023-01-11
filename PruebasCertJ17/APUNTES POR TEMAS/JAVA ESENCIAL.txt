@@ -64,6 +64,11 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 
 6) Se pueden sobrecargar fuciones llamadas main dentro una clase siempre que se usen
    distintos parámetros
+   
+7) Property encapsulation le llaman a tener variables miembro de instancia privado
+   Los métodos de acceso como te salgan de la polla -aunque pueda resultar paradójico-
+   
+8) Inner classes puede tener atributos STATIC (desde Java16)
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 
@@ -114,7 +119,9 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 
 1) long, float, double, and boolean NO PUEDEN USARSE NUNCA como variable Switch(v)
 
-
+2) Con switch (enumerado)
+	case Enumerado.VALOR -> ... ERROR! No puede usarse Enumerado.
+								DIRECTAMENTE hay que usar VALOR
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 
@@ -156,9 +163,6 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 	var amount = 1000.0; // B
 	float amount = 1000.0; // X MAL debería llevar f
 
-//ENUM
-
-1) No se puede extender de un enum
 
 //VAR 
 
@@ -168,6 +172,15 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 2) var n; n = 0; -- INCORRECTO! no se puede declarar var sin inicializar	
 
 3) VAR sólo puede ser usado para variables locales dentro de un método 
+
+//FOR EACH
+
+1) for(final String s : Arrays.asList("a","b","c")){
+        System.out.println(s);
+    }
+    
+  Se permite declarar una variable iteradora como final
+  porque JAVA internamente, en cada bucle la redeclara!!!!
   								
   								
   								

@@ -4,10 +4,17 @@
 
 2) No puedes heredar de un enumerado
 
-3) S/e puedes declarar un m�todo abstratacto en el enum y que cada clase/tipo 
-   lo sobreescriba dentro de s�. (raro, pero vero Type)
+3) S/e puedes declarar un método abstratacto en el enum y que cada clase/tipo 
+   lo sobreescriba dentro de sí. (raro, pero vero Type)
+
+	3.1) El enumerado puede definir un método abstracto si todos los subitpos lo implementan
 
 4) No puedes sobreescribir equals en un enumerado
 
 5) Una instancia de enum NO es inmutable (puede cambiar su estado/valor) sin declararse
    uno nuevo.
+   
+6) Ojo con la sintaxis del enumerado. Siempre debe acabar en PUNTO y COMA ;
+   si está declarado dentro de una clase (como suele ser)
+   
+7) El enumerado tiene un constructor privado (no puede tener público)
