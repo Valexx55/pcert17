@@ -9,8 +9,6 @@ aunque no lo ponga, y por tanto no puede sobrrescribirse
 
 4) Una interfaz puede heredar de 2 interfaces :S
 
-5) Una clase abstracta puede implementar una interfaz (y es como si heredase en realidad)
-
 6) Puedo declarar una interfaz como abstract (aunque implícitamente lo sea)
 
 7) Un método de una interfaz (sin modificador) se ha de implmentar con public (explícitamente)
@@ -18,7 +16,7 @@ aunque no lo ponga, y por tanto no puede sobrrescribirse
 8) Los métodos de una interfaz son implícitamente public abstract (implícito-el compilador lo pone)
 
 QUE SEA IMPLÍCITO DICE QUE SI NO PONES NADA, EL COMPILADOR LO PONE. 
-O PONE LO QUE LE FALTA.
+-O PONE LO QUE LE FALTA-.
 
 PERO PEJ LOS MÉTODOS DE UNA INTERFAZ PUEDEN SER PRIVADO (NO TE PONE PUBLIC)
 AUNQUE NO PROTECTECT
@@ -27,6 +25,7 @@ SÓLO public, default y private (x static)
 Puede haber métodos de una interfaz:
 
 8.1 modificadores permitodos en los métodos de una una IFAZ
+	
 	private
 	private static
 	static (public)
@@ -41,18 +40,63 @@ Puede haber métodos de una interfaz:
 
 10) Si intento tipar con modificadores distintos a los implícitos a un interfaz, peta
 
-11) Las clases abstractas no tiene modificadores implícitos (ni obliga a la subclase)
-
 12) Si una clase que hereda de otra define como static un método, está ocultando
 	la versión del padre (anula el poliformismo)- Hidding methods
 	
-    12.1 un método estático en la clase padre sólo puede serl ocultado
+    12.1 un método estático en la clase padre sólo puede ser ocultado
     	 no sobreescrito
    
    12.2 Si una instancia define el mismo nombre y tipo de variable, 
         oculta a la del padre
         
+   12.3 Si un IFAZ declara un método default y está implmentado en alguna
+        subclase, se ejecuta el de la subclase POLIMORFISMO
+        
+13) Default métodos Java 8 en interfaces:
+	Pueden contener this (y se refieren a la instancia) que los invoca
+	pero nunca pueden referenciar a un atributo de la instancia
+	this.atributoInstancia
+	
+	sólo puede acceder a atributos de la propia IFAZ
+	this.atributoInterfaz || OJO públicos y estáticos y finales
+	NADA de cambiar su estado
+	
+14) Puedes implemntar un método en una clase, que hereda/implmenta
+    el método con el mismo nombre de 2 sitios -> será tratado como uno
  
+ 	Pero no puedes heredar de 2 interfaces con el mismo default method.     
+        
+ -------------------------------
+ -------------------------------
+ 
+ //CLASES ABSTRACTAS
+ 
+1) abstract puede ir por donde le salga de la p 
+    antes, después de clase, private o publlic.
+
+2) Una clase abstracta puede implementar una interfaz (y es como si heredase en realidad)
+
+3) Las clases abstractas no tiene modificadores implícitos (ni obliga a la subclase)
+
+4) Una clase puede declararse abstracta aunque no tenga ningún método abstracto	
+
+5) Métodos abstractos (de una IFAZ o clase A) que no son implmentandos en una 
+   clase / tipo hijo, quedan como abstractos
+   
+6) Override no es obligatorio (pero sí recomendable) pero si lo pones
+	el compilador validará que siues la misma cabecera
+	
+7) Si es supertipo tiene Throws Exception en la cabecera, no es obligatorio
+   que la implmentación lo tenga
+   
+   Pero si una implmentación lanza una CHECKED exception, es porque 
+   el supertipo también lo tiene (si no falla)
+   
+8) Un método en una clase abstracta No marcado como abstracto, debe dar una 
+   implementación 
+   
+9) Una Clase abstracta puede implmentar una IFAZ
+   pero una IFAZ NO puede heredar de una Clase abstracta
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 
@@ -88,3 +132,9 @@ Puede haber métodos de una interfaz:
 			C c = new A().new C(); es valido
 			C c = new C(); //No es válido (por ser dinamico)
 		}
+		
+6) Recuerda: una clase anidada puede referirse a su superior por ClasePadre.this
+   Y si la clase anidada es además hereda o implementa a la padre, puede usarse
+   ClasePadre.super pa ejecutar, por ejemplo, un método default de una IFAZ
+   
+   (ver jcp17.interfaces.AbstractPrivatePruebas)
