@@ -29,6 +29,7 @@ apuntan a la lista de orginal (no son nuevas listas)
 
 4) El uso de Genéricos, hace que evites castings y que asegures en tiempo de compilación
    que hay concordancia de tipos (cosa que no pasa con Object)
+   Además de permitir un uso más eficiente el uso de la memoria
    
 
 5) OjO ? SUPER extends
@@ -41,11 +42,17 @@ apuntan a la lista de orginal (no son nuevas listas)
 
 	<<Por eso que List<? super Number> sería un subtipo de List<? super Integer> -->>
 
+
+	5.1) super SÓLO PUEDE USARSE CON ?
+
 6) List<Integer> NO es una List<Object> 
    List<Integer> SÍ es una List <? extends Number>
    List<Integer> SÍ es una List <?> 
    List<Integer> NO es una List <? super Number>
-   (ver jcp17.herencia.PruebaInstaceOfGenericos)	
+   (ver jcp17.herencia.PruebaInstaceOfGenericos)
+   
+   List<Number> es más restrictivo que List<? extends Number>
+   el primero no permite subtipos el segundo sí	
    
 7) En realidad, los genéricos están pensados para expresar relaciones entre tipos
    de parámetros de entrada y salida. Si no se da, mejor usar wildcard comodín y listo
@@ -60,6 +67,10 @@ apuntan a la lista de orginal (no son nuevas listas)
 8) Box<Integer> integerBox = new Box<>(); // esto se permite desde J7
    dejas que el compilador infiera el tipo sin poner new Box<Integer>
    y se le llama DIAMOND diamante <>
+   
+   se llama Boxing cuando un primitivo se infiere a una clase
+   y Unboxing al contrario. cuando una clase se pasa a primitivo
+   automáticamente por Java
    
 9) Convenciones en el nombrado de parámetros
 
@@ -84,3 +95,87 @@ apuntan a la lista de orginal (no son nuevas listas)
 	
 	imprime 2, 1, 3
 
+12) Si un método padre usa genéricos en sus parámetros Set<Integer>, 
+	el hijo puede quitarlos Set. 
+	
+	Pero no al revés.
+    Si el padre no usa, el hijo no puede ponerlos.
+
+13) La info de genéricos <T> se quita al compilar,  por lo que dos métodos
+	distintos, no pueden sólo diferir en el T, pues daría fallo
+	
+	Esto lo llaman Type Erasure (borrado de tipos)
+	
+14) El TypeErasure provoca que los genéricos se vayan a traducir a su tipo
+    frontera (padre) o a Object al compilarse.
+    
+    Aún así, en herencias y polimorfismo, puede pasar que el compilador genere
+    funciones ficción, (bridge methods) para trabajar con Object en supertipos
+    y evitar casques
+	
+15) super no se puede usar para limitar tipos sólo con ? WildCars
+
+	public <T super String> Collection<T> transform(List<String> list) . ILLEGAL
+	
+	Esto pasa porque T al final se traduciría a Object, y hace que el tipo
+	frontera sea inutil en la práctica.
+	
+	Intermanete en Java el Polfimorfismo está controlado/funciona, de arriba
+	a abajo. De clases padre a clases hija.
+	 
+16) Relacionado con esto, un Refiable type es un tipo que se sabe en todo momento
+	de qué tipo es: primitivos, clases normales, arrays, etc.
+	
+	Mientras que los no refiable, son List<Number> o List<Integer> a los que al quitar
+	por el type erausre el genérico, no puedes usar instaceof por ejemplp
+	porque no se sabe en ejecución de qué tipo es
+	
+17) Heap Pollution si tu usas List<T> y pasas elemntos T, bien, pero al quitarse
+    el tipo Type erasure, Java no puede controlar en ejecución qué todo está bien
+    de ahí que a veces salgan warnings con tipos. que se pueden quitar
+    con @SageVarArgs y @SupresWarnings
+    
+18) COsas que no se pueden hacer con genéricos
+
+	- Cannot Instantiate Generic Types with Primitive Types
+		no puedo hacer 
+		Pair<int, char> p = new Pair<>(8, 'a');
+		
+		sería
+		
+		Pair<Integer, Character> p = new Pair<>(8, 'a');
+	- Cannot Create Instances of Type Parameters
+		no puedo hacer new T();
+		
+	- Cannot Declare Static Fields Whose Types are Type Parameters
+	
+		implicaría que varias instancias (de un tipo distinto)
+		tienen un mismo campo compartido (estático) de distinto tipo :S
+		
+	-	Cannot Use Casts or instanceof With Parameterized Types
+	
+		prohibido	List<?> list 
+    				if (list instanceof ArrayList<?>)
+    				
+    	prohibido	List<Integer> li = new ArrayList<>();
+					List<Number>  ln = (List<Number>) li;  // compile-time error
+
+	-	Cannot Create Arrays of Parameterized Types
+	
+		prohibido List<Integer>[] arrayOfLists = new List<Integer>[2];
+
+	-	Cannot Create, Catch, or Throw Objects of Parameterized Types
+	
+		prohibido catch (T e) {   // compile-time error
+		
+		prohibido class MathException<T> extends Exception
+		
+		PERMITIDO public void parse(File file) throws T
+
+	-	Cannot Overload a Method Where the Formal Parameter Types of 
+		Each Overload Erase to the Same Raw Type
+		
+		prohibido
+					public void print(Set<String> strSet) { }
+    				public void print(Set<Integer> intSet) { }
+		

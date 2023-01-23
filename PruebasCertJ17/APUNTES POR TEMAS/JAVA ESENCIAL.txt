@@ -7,6 +7,18 @@
 	
 3) Arrays.compare (a1, a2, comaparador? ) : 1, -1 , 0
 
+4) [] en los arrays báiscos no está sobreescrito 
+	el equals, así que se ejecuta el de object
+	que pregunta por la dirección, no por contenido
+
+5) El clone de arrray [] da otra dirección pero el
+   mismo contenido. Clona, como se espera.
+   
+6) Para comparar dos arrays Arrays.equals(a1, a2)
+
+-----------------------------------------------------------------------
+-----------------------------------------------------------------------
+
 //STRINGS
 
 1) El método isBlank devuelve true si la cadena está vacía o contiene 
@@ -22,9 +34,17 @@ todo espacios blancos
 
 4) substring [) - 1º incluído 2º no incluido
 
+
+5) no puedo especificar tamaño si uso llaves con valores
+	String[ ] sa = new String[3]{ "a", "b", "c"}; ---NO VALE
+	String[ ] sa = new String[]{ "a", "b", "c"}; ---SÍ VALE
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+
 //FINAL
 
 	final aplicado a atributos provoca que no pueda modicarse el valor una vez asignado
+	- sólo puede asignarse en el constructor-
 
 	final aplicado a clases hacen que de esa clase no pueda heredarse
 
@@ -69,6 +89,12 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
    Los métodos de acceso como te salgan de la polla -aunque pueda resultar paradójico-
    
 8) Inner classes puede tener atributos STATIC (desde Java16)
+
+9) Las clases deben tener algún tipo público al alto nivel que coincida con el nombre
+   del fichero: pUde ser enum, interface, class, records..
+   
+10) Un tipo no anidado (top leve) puede ser sólo de
+     acceso público o defaultt (package)
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 
@@ -108,6 +134,31 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
    
    pej: 3 + 100/10*2-13 = 10 
    //100/10 = 10; 10*2=20; 20+3 = 23; 23 -13 = 10! 
+   
+8) Para tu sorpresa, el código siguiente, funciona 
+
+class ScopeTest{    
+static int x = 5;    
+
+public static void main(String[] args){       
+
+int x  = ( x=3 ) * 4;  // 1       
+System.out.println(x);    
+
+} } e IMPRIME 12
+
+x es en todo momento la variable local que hace sombra (shadows)
+a la variable estática x
+
+Y FUNCIONA PQ (x=3) está entre paréntesis. Sólo por eso
+si no lo estuviera, se intentaría acceder al valor de x
+antes de iniciarla y daría fallo
+
+int x  =  x* 4; //FALLo
+int x  =  x; //FALLo
+
+extra!
+var x  = ( x=3 ) * 4//esto FALLA tb porque no puedes referenciar a la propia variable usando x
 
     
 
@@ -164,6 +215,38 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 	float amount = 1000.0; // X MAL debería llevar f
 
 
+8) public class ParamTest
+ {      
+ 	public static void printSum(double a, double b)
+ 	{
+ 	  System.out.println("In double "+(a+b));  
+ 	}   
+ 
+ 	public static void printSum(float a, float b)
+ 	{       
+ 		System.out.println("In float "+(a+b));   
+ 	}     
+  	public static void main(String[] args) 
+  	{       
+  		printSum(1.0, 2.0);  //In double 3.0 es imprimido
+  		printSum(1, 2);  //In float 3.0 es imprimido porque int está más cerca de float
+  		 
+  	} 
+  }
+  
+9) Tipos primitivos numéricos. Puede incluir 
+
+		long n = 0b11; prefijo binario 0b
+		long s = 0B111;  ó 0B
+		long creditCardNumber = 1234_5678_9012_3456L; guines bajos entre números
+		long socialSecurityNumber = 999_99_9999L; sufijos L F o l/f long float
+		float pi =  3.14_15f;
+		long hexBytes = 0xFF_EC_DE_5e;
+		long hexWords = 0xCAFE_BABE; 0x o 0X como prefijo para hexadecimales
+		long maxLong = 0x7fff_ffff_ffff_ffffl;
+		byte nybbles = 0b0010_0101;
+		long bytes = 0b11010010_01101001_10010100_10010010;
+
 //VAR 
 
 1)  for (var i=5; i=0; i--) { } -- incorrecto no puedes asignar a un var 0, porque lo
@@ -171,7 +254,10 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
   								
 2) var n; n = 0; -- INCORRECTO! no se puede declarar var sin inicializar	
 
-3) VAR sólo puede ser usado para variables locales dentro de un método 
+3) VAR sólo puede ser usado para variables locales dentro de un método
+
+---------------------------------------------------------------
+--------------------------------------------------------------- 
 
 //FOR EACH
 
@@ -184,3 +270,82 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
   								
   								
   								
+ -------------------------------------------------------------------
+ -------------------------------------------------------------------
+ 
+ 
+ //CONSTRUCTORES
+ 
+ 1) 
+ 
+ class A{
+   A() {  print();   }
+   void print() { System.out.print("A "); }
+}
+class B extends A{
+   int i =   4;
+   public static void main(String[] args){
+      A a = new B();//-----aquí"!
+      a.print();
+   }
+   void print() { System.out.print(i+" "); }
+}
+
+ESTE código imprime 0 4
+
+Al hacer new B(), hay una llamada implícita a A()
+que llama a print, cuando i (variable de B) 
+aún no ha sido iniciada (por que está A en proceso)
+y vale 0.
+
+luego la llamada a.print() hace 4
+
+
+2) En un constructor no puedes llamar a super y this. o llamas a uno o a otro.
+
+3) super() no se llama/pone automáticamente si hay constructor explícito
+   con algún argumento
+   
+4) Los constructores NO se heredan
+
+5) Sólo en un constructor puedes iniciar/asignar una variable static
+   
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+//RECOLECTOR DE BASURA
+
+1. An object can be made eligible for garbage collection by making sure there 
+are no references pointing to that object. 
+
+2. You cannot directly invoke the garbage collector. You can suggest the 
+JVM to perform garbage collection by calling System.gc()
+
+3. Ojo con el Recolectory las tampas 
+
+public class Buddy {     
+	Buddy upper;     
+	String name;     
+	public Buddy(){ } 
+	        
+	public Buddy(String name)
+	{         this.name = name;     } 
+	    
+	public Buddy(String name, Buddy upper){         
+		this.name =  name;         
+		Buddy b = new Buddy(upper.name);//1         
+		upper = b; //2     
+	}
+	
+	EN LA LÍNEA 2 upper hacer refrencia al parámetro
+	se puede eliminar por el GC tras acabar el método
+	
+4. CUIDADO no es lo mismo cambiar el objeto (la referencia, igualandolo a null)
+   que si es un parametro apunta a otro sitio, pero deja el original como estaba
+   que cambiar el ESTADO, que sería permantente aun saliendo del método
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+//INTEGER
+
+1. Integer.parseInt(string, base) si sale del rango de int da fallo

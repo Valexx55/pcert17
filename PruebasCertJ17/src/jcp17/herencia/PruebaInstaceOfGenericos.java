@@ -16,8 +16,11 @@ public  class PruebaInstaceOfGenericos {
 		recibeo(ali);//falla - sólo adimite List<Object>
 		recibewildcard(ali);//funciona -admite List<?>
 		recibes(ali);//falla - sólo adimite supertipos de Number
-		
-		
+		reciben(ali);//funciona - admite subtipos de Number
+		//ArrayList<CharSequence> is covariant with List<? extends CharSequence>
+		//ArrayList<? extends Integer> is not a subtype of ArrayList<Number>
+		//ArrayList<Number> an = new ArrayList<Integer>();
+		//ArrayList<Integer> ai = new ArrayList<Number>();
 	}
 	
 	private  static <T> void recibe (Collection<? super Integer> recibo)
@@ -25,7 +28,13 @@ public  class PruebaInstaceOfGenericos {
 		
 	}
 	
+	
 	private  static <T> void recibes (Collection<? super Number> recibo)
+	{
+		
+	}
+	
+	private  static <T> void reciben (Collection<? extends Number> recibo)
 	{
 		
 	}

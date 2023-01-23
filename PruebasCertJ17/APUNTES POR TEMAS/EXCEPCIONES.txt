@@ -44,3 +44,35 @@ con solo una asignación a este
 6) En un T_W_R el close se invoca al final del try!!! 
    de modo que el finally, si hay algun acceso
   al recurso cerrado automáticamente, fallaría
+  
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
+//EXCEPCIONES Y HERENCIA
+
+
+1) Si es supertipo tiene Throws Exception en la cabecera, no es obligatorio
+   que la implementación lo tenga
+   
+   Pero si una implmentación lanza una CHECKED exception, es porque 
+   el supertipo también lo tiene (si no falla)
+   
+2) En constructores donde hay herencia, el subtipo debe declarar las mismas CHECKED
+   exceptions o supertipos de ella. Tb puede añadir más.
+   
+3) En los métodos sobreescritos normales, pasa lo contrario. El subtipo tiene que
+   declarar las CHECKED exceptions del padre o subtipos
+   
+   
+    class A{     
+   		public A() throws IOException{ }       
+   		void m() throws IOException{ }   
+   	}    
+   	class B extends A{     
+   	
+   		//IOException OK, but FileNotFoundException is invalid     
+   	  	public B() throws IOException{ }      
+   	
+   		//FileNotFoundException OK, but Exception is invalid     
+   		void m() throws FileNotFoundException{ } 
+   	}

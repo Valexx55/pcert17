@@ -1,3 +1,160 @@
+//HERENCIA
+
+1) Override no es obligatorio. Pero si no está, el método puede sigfnicar
+    una sobreescritura o una sobrecarga
+    
+    SI EL NOMBRE Y LA LISTA DE PARÁMETROS - sin entrar en genéricos - COINCIDE, 
+    HABLAMOS DE SOBREESCRITURA
+    (CABECERA)
+    
+    SI NO, ya hablamos sólo de una posible sobrecarga
+
+2) Si en el constructor de una clase hija no pones super()
+   el compilador lo pone automáticamente    
+   
+3) cuando sobreescribes un método y el tipo que devuelves es más específico
+   COVARIANZA
+   
+   si fuera al revés: el subtipo es más genérico: CONTRAVARIANZA
+   
+   Java permite la covarianza: que el tipo devuelto por el método sobreescrito
+   sea más específico que el de su padre
+   
+
+	
+4) Un método heredado está correctamente sobreescrito si:
+
+	4.1 Mismo nombre y parámetros (en tipo y número)
+	    Es decir, misma CABECERA que el padre
+	    
+	    No forman La Cabecera 
+	    	ni modificadores de acceso, 
+	    	ni las execpciones
+	    	ni otros atributos opcionales.
+	    	
+	   NOTA: La sobreescritura puede provocar desbordamiento de pila.
+	   OJo como se invoca
+	   
+	4.2 El tipo devuelto en el hijo es igual o más accesible que en el padre
+	
+		public > protecteted > default > private
+		
+		*los métodos privados del padre no se sobreescriben.
+		el hijo no es consciente de lo que tiene el padre.
+		
+	4.3 El hijo no puede crear una checked excepción nueva o más genérica
+	    que el padre (sí más específica)
+	    
+	4.4 Covarizana en el tipo devuelto. El hijo puede devolver el mismo
+	    o un subtipo del tipo devuelto por el padre.
+	   
+	   	 	void sólo tiene covarianza con void
+	    	siendo A original B hijo
+	    	
+	    ¿Es covariante? --> ¿Puedo asignar una instancia de B a A sin casting?
+	    
+	
+	4.5 Un método estático no se sobreescribe. 
+	
+		 - Se oculta (se llama al hijo): si además de cumplir las normas anteriores
+		 es también statico
+		 
+		 - Da fallo de compilación si el hijo o el padre no lo declara static
+		 y el otro sí.
+	
+
+	4.6 Las variables no se sobreescriben. Se pueden ocultar
+		Si Un hijo, si tiene la misma variable
+	    que un padre, mantendría la referencia a las dos: al padre y a la suya
+	    
+	    Depende el tipo de referencia usas una u otra.
+	    
+	    class Carnivoro {
+	    boolean tienePelo =false;
+	    
+	    class Hombre extends Carnivoro {
+	    boolean tienePelo = true
+	    
+	    	new Hombre().tienePelo = true
+	    	Carnivoro c = new Hombre();
+	    	c.tienePelo = false;
+	
+	
+	4.6 Métodos final no puedes sobreescribirse    
+
+	4.7 @Override es opcional - aunque ayuda a que el compilador te avise de fallos-
+	
+	
+	
+	4.2 Si se cumple 4.1, y además: 
+	
+		Los genéricos: si el padre tiene genéricos
+		el hijo puede NO tenerlos. 
+		
+		Si el padre no tiene, el hijo no puende tener
+		
+		Si el padre tiene, el hijo debe tener los mismos exactamente
+		
+	4.3 En los tipos devueltos: covarianza
+		Tanto del Tipo de Clase
+		Como del Tipo Combinado con el genérico
+		ArrayList<CharSequence> es un subtipo (es covariante) a List<? extends CharSequence>
+		pero 
+		ArrayList<? extends Integer> no es un subtipo de ArrayList<Number>
+
+5) Un método se sobrecarga correctamente si:
+	
+	5.1 Tiene el mismo nombre y DISTINTO número o tipo de parámetros
+		o distinto modificador de acceso o static o diferente tipo devuelto
+		o diferentes excepciones
+		
+		DISTINTA CABECERA/ SIGNATURA
+	
+		5.1.2 Si sólo cambia el tipo devuelto (en la misma clase), no es una
+	    sobrecgarga válida
+	    
+	    5.1.3 Si solo cambia uno con y otro sin static, no es válida
+	
+		
+	5.2 Devuelve el mismo tipo exactamente en la misma clase (sin admitir covarianza)
+	
+	5.3 Si se sobrecarga en una clase que hereda, puede haber covarianza en el tipo 
+		devuelto Siendo siempre la clase padre el supertipo
+	
+	"LA CABECERA es el NOMBRE + PARÁMETROS (no el tipo devuelto) - ESTRICTAMENTE HABLANDO-
+	
+6) Si el método está sobrecargado en la misma clase, Java decide a quién llamar
+   basándose en los parámetros y su tipo. Si hay dudas, también decide
+   Normalmente va al más específico. Si no, prueba con otro.
+   
+   1 fly (String) 2 fly (Object)
+   
+   		fly ("hola") llama a 1
+   		fly (56) llama a 2
+   		
+    glide (1, 2)
+    	concordaría de menor a mayor con
+    		glide (int, int);
+    		glide (long, long);
+    		glide (Integer, Integer);
+    		glide (int ... nums);
+
+7) NO puedo tener el método sobrecargado con la misma firma cabecera signatura
+   solo cambiando el tipo devuelto, en una misma clase
+   
+   Sobrecarga NO válida	
+   
+   En clases padre-hija sí puede valer
+     
+   
+8) Respecto a la visibilidad de la herencia
+   el método que hereda no puede reducir la visiblidad
+   pero sí ampliarla	
+    
+   public > protecteted > default > private			
+----------------------------
+----------------------------
+
 //INTERFACES
 
 1) Si una Interfaz declara un atributo, es públic static y final por defecto,
@@ -47,7 +204,12 @@ Puede haber métodos de una interfaz:
     	 no sobreescrito
    
    12.2 Si una instancia define el mismo nombre y tipo de variable, 
-        oculta a la del padre
+        oculta a la del padre (aunque no sea static). En caso de duda, 
+        existe en el padre y el hijo, atiende al tipo con el que se invoca - referencia-
+        (no hace polimorfismo)
+        
+   12.2.1 Las variables instancia nunca se sobreescriben. Se ocultan -redefiniendose
+   o se sombrean (shadowed) por variables locales o métodos
         
    12.3 Si un IFAZ declara un método default y está implmentado en alguna
         subclase, se ejecuta el de la subclase POLIMORFISMO
@@ -61,11 +223,31 @@ Puede haber métodos de una interfaz:
 	this.atributoInterfaz || OJO públicos y estáticos y finales
 	NADA de cambiar su estado
 	
+	"LOS campos declarados en una clase no son visibles a una IFAZ"
+	
 14) Puedes implemntar un método en una clase, que hereda/implmenta
     el método con el mismo nombre de 2 sitios -> será tratado como uno
  
- 	Pero no puedes heredar de 2 interfaces con el mismo default method.     
-        
+ 	Pero no puedes heredar de 2 interfaces con el mismo default method.
+ 	-Pero sí, si lo sobreescribes.- aplica la norma anterior en reealidad  
+ 	
+ 	PERO Sí puedes implementar 2 interfaces que son padre e hija
+ 	que tengan el mismo método default (se aplica polimorfismo, ejecutaándse
+ 	el default más concreto)   
+ 
+15) Si una clase hereda y sobreescribe un método que devuelve un tipo
+     primitivo, debe ser el mismo exactamente en la clase que sobreescribe.
+    
+16) Si una clase hereda y redefine el método cambiando el tipo a los parámetros
+    no es sobrescritura, es sobrecarga
+    
+17) Si una clase hereda, el tipo devuelto puede ser menos restrictivo que el 
+    del padre, pero no más.
+    
+ 18) super.super no puedes acceder. No existe
+ 
+ 	Pero si implementas una IFAZ con defautl, lo sobreescribes y quieres
+ 	referirte al Padre puedes con IFAZ.super.metodo() desde el hijo     
  -------------------------------
  -------------------------------
  
@@ -86,17 +268,15 @@ Puede haber métodos de una interfaz:
 6) Override no es obligatorio (pero sí recomendable) pero si lo pones
 	el compilador validará que siues la misma cabecera
 	
-7) Si es supertipo tiene Throws Exception en la cabecera, no es obligatorio
-   que la implmentación lo tenga
-   
-   Pero si una implmentación lanza una CHECKED exception, es porque 
-   el supertipo también lo tiene (si no falla)
-   
 8) Un método en una clase abstracta No marcado como abstracto, debe dar una 
    implementación 
    
 9) Una Clase abstracta puede implmentar una IFAZ
    pero una IFAZ NO puede heredar de una Clase abstracta
+   
+10) Si tienes una clase que hereda un método estático
+    y sobreescribe (implmenta) una IFAz con el mismo método, 
+    da conclifto: no sabe si tirarse para el static o el dinamyc
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 
@@ -104,10 +284,13 @@ Puede haber métodos de una interfaz:
 
 1) Hay de 4 tipos:
 	
-		- Inners 
+		- Inners : si no son estáticas, pueden tener estático sólo propiedades finales
+				   pueden acceder a todos los atributos de la outer (sin modificador)	
 		- Estáticas: 
 		- Locales : se definen dentro de un método, para encapsular una pequeña tarea
 		- Anónimas : Sin nombre Subtipo Local heredan de una abstracta implementan una interfaz 
+			         No pueden ser static, ni usar extends o implements
+			         Pueden tener parámetros de inicialiazción si heredan de clases
 		
 2) Ej anónima	var h = new Clase() {}; 
    h es una instancia de Clase - a su vez una Ifaz o Clase Abastracta-
