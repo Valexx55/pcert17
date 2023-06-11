@@ -38,8 +38,11 @@ public class TestClass {
 		//f (base instanceof File c){//Fallaría porque Base y FIle NO TIENE RELACIÓN JERÁRQUICA 
 		
 		//if (base instanceof A a) {//la que falla
-		if (base instanceof A c) {//FUNCIONA
-			System.out.println(a.power());
+		if (base instanceof A c && false) {//FUNCIONA
+			System.out.println(c.power());
+		} 
+		else {
+			//System.out.println(c.);
 		}
 		System.out.println("a is " + a);
 	}

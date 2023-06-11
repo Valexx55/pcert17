@@ -18,7 +18,7 @@ public class TextBlockJ15 {
 	 * \" sería ignorado y supundría el literal " --> en los textBlocks no hace falta escapar las comillas
 	 * 
 	 * El caracter más a la izquierda define el margen izquierdo, conviertiendo
-	 * en espacios eseciales a las líneas que se metan a la derecha respecto de él
+	 * en espacios esenciales a las líneas que se metan a la derecha respecto de él
 	 * 
 	 * El efecto alineador/margen izquiero lo tiene también los caracteres de cierre """
 	 * no así los de apertura
@@ -26,7 +26,7 @@ public class TextBlockJ15 {
 	
 	public static void main(String[] args) {
 		String s1 = 
-		"""
+		""" 
 			a \
 			b \t
 			c \s

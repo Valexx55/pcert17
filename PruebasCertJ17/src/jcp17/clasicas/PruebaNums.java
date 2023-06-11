@@ -5,6 +5,7 @@ package jcp17.clasicas;
 //SE PASA POR VALOR!
 public class PruebaNums {
 	public static Integer wiggler(Integer x) {
+		int salida = 5__0;
 		Integer y = x + 10;
 		x++;
 		System.out.println(x);

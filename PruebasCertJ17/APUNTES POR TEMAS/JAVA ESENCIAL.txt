@@ -2,10 +2,16 @@
 
 1) Array.binarySearch (array, clave) :pos debe etar ordenado para que el método funcione
 
-2) Arrays.mismatch (array1, array2 ) devuelve -1 si los array que compara son oiguales o el índice
+2) Arrays.mismatch (array1, array2 ) devuelve -1 si los array que compara son iguales o el índice
 	del primer discordante
 	
 3) Arrays.compare (a1, a2, comaparador? ) : 1, -1 , 0
+
+	si son distintos (mismatch devuelve numero positivo)
+	y ese número de índice está presente en ambos, se devuelve lo que resulta de la compración
+	pero si ese número es más pequeño (alguno no llega a ese índice)
+	compare devuelve la diferencia de tamaño 
+	
 
 4) [] en los arrays báiscos no está sobreescrito 
 	el equals, así que se ejecuta el de object
@@ -16,28 +22,99 @@
    
 6) Para comparar dos arrays Arrays.equals(a1, a2)
 
+7) new Object[]{ "aaa", new Object(), new ArrayList(), {} };// INCORRECTO
+   
+   pq el último objeto, es un array y estoy creando un array de objetos
+   no un array, de un array de objetos. El piensa que estás creando un objeto
+   porque es un new Object[] y no reconoce {} como creación válida
+   
+   sin embargo, 
+   Object arr[][] = new Object[][] {new String[5], {} }//sería correcto
+   
+   por que admite que la declaración de {} como un array
+ 
+8) new Object[1]{ new Object() }; --> //INCORRECTO . 
+   
+   o especificas un tamaño o declaras los elemtnos
+   las 2 cosas a la vez no
+   
+   new Object[]{ new Object() }; --> //ojo pq esto sería correcto!
+   
+   var z = {1, 2, 3}; --> incorrecto
+   
+   var z2[] = {1, 2, 3}; --> incorrecto!
+   
+   var z2 = new int[]{1, 2, 3}; --> correcto
+		
+   int[] sz = {1, 2, 3}; --> correcto
+		
+   int[] sazo = new int[]{1, 2, 3}; --> correcto 
+   
+9) Puedo CREAR arrays de LONGITUD CERO
+
+10) flipa pq se pueden declarar arrays así
+
+	int[] times[] = new int[3][3];
 -----------------------------------------------------------------------
 -----------------------------------------------------------------------
 
-//STRINGS
+//STRING STRINGS
 
 1) El método isBlank devuelve true si la cadena está vacía o contiene 
 todo espacios blancos
 
 2) Strings son imutables: si le cambias el valor, se crear automáticamente una variable nueva, perservando la orignal
-   Esto hace de evitar modificaciones en datos pasados por par�metros
+   Esto hace de evitar modificaciones en datos pasados por parï¿½metros
    
    Hacer una clase final evita que pueda heredarse de ella y por tanto, redefinir
    métodos y atributos que pudieran alterar el estado del objeto padre, indirectamente.
 
 3) strip () -- método que quita los espacios por delante y por detrás.
 
-4) substring [) - 1º incluído 2º no incluido
+4) substring [) - 1Âº incluído 2Âº no incluido
 
 
-5) no puedo especificar tamaño si uso llaves con valores
+5) no puedo especificar tamaÃ±o si uso llaves con valores
 	String[ ] sa = new String[3]{ "a", "b", "c"}; ---NO VALE
 	String[ ] sa = new String[]{ "a", "b", "c"}; ---SÍ VALE
+	
+6) StringBuilder NO HEREDA De String
+
+7) StringBuilder:
+		
+			- No tiene le método add
+			- el método append sí, pero añade al final
+			- el insert, indica la posición
+			 
+71) StringBuilder tiene
+	
+		ensureCapacity(n)
+			
+8) Comparando 
+
+		String uno = "DOS";
+		String dos = new String("DOS"); 
+		
+		uno == dos -> false
+		
+		String uno = "DOS";
+		String dos = "DOS"; 
+		
+		uno == dos -> true
+		
+9) Impriminedo con SYSOUT
+
+  System.out.println(null + true); //1 -- NO COMPILA    
+  System.out.println(true + null); //2    
+  System.out.println(null + null); //3
+		
+		
+  String getString() { return null; }, println( getString() + true ) -- Esto funcionaría
+  -- nulltrue
+  
+10) String.valueOf (Object) devuelve el llama al método toString() de ese Object
+
+11) String.trim() --> quita caracteres <= 20 : espacios e intros
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
 
@@ -54,9 +131,15 @@ todo espacios blancos
 	(que subclases no se pueda modificar el estado de un objeto sin que
 	se cree uno nuevo)
 	
+	Si un ATRIBUTO es declarado como final, debe inicializarse o en el constructor o en la misma declaración
+	si no, da ERROR de COMPILACIÓN
+	
+	
 // NOMENCLATURA
 
 	desde Java 9 no puede usarse el guión bajo sólo como identificador ("_")
+	
+	el nombre de una variable no puede empezar por número
 
 //CLASES ESTRUCTURA
 
@@ -93,12 +176,78 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
 9) Las clases deben tener algún tipo público al alto nivel que coincida con el nombre
    del fichero: pUde ser enum, interface, class, records..
    
-10) Un tipo no anidado (top leve) puede ser sólo de
-     acceso público o defaultt (package)
+10) Un tipo no anidado (top level) puede ser sólo de
+     acceso público o default (package)
+ 
+ 11) import no puede ir después de package NUNCA
+ 
+ 
+ 12) CUANDO  se inicializa una clase...
+ 
+ 			First, static statements/blocks are called IN THE ORDER they are defined. 
+ 			Next, instance initializer statements/blocks are called IN THE ORDER they are defined. 
+ 			Finally, the constructor is called. So, it prints a b c 2 3 4 1.
+
+
+13) static final o final static van a funcionar en cualquier orden al
+    declarar un método, luego ya viisblidad y tipo devuelto siempre en ese orden
+    
+14) una variable declarada como final static puede inicializarse en un bloque static
+
+15) puede haber más de un bloque static 			
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 
 //OPERADORES
+
+0) orden de predencia de operadores: DE MAYOR A MENOR
+
+1) sean a, b y c booleanos 
+   if (b != c = a)
+   
+   esto da fallo, porque distinto tiene más prioridad que la asignación
+   y luego querrías asignar una valor a un constante (true o false) nova 
+
+
+| 15 | Parentesis                   |  ()
+|    | Arreglos                     |  []
+|    | Acceso a miembros            |  .
+| 14 | Post-incremento              |  ++
+|    | Post-decremento              |  --
+| 13 | Pre-incremento               |  ++
+|    | Pre-decremento               |  --
+|    | Mas                          |  +
+|    | Menos                        |  -
+|    | Negación lógica              |  !
+|    | Negación/Complemento binario |  ~ 
+|    | Casting de tipos             |  (tipo)
+| 12 | Multiplicación               |  *
+|    | División                     |  /
+|    | Módulo                       |  %
+| 11 | Adición                      |  +
+|    | Sustracción                  |  -
+| 10 | Despl. Bits Izq.             |  <<
+|    | Despl. Bits Der. /Signo      |  >>
+|    | Despl. Bits Der. /Cero       |  >>>
+|  9 | Menor que                    |  <
+|    | Menor o igual que            |  <=
+|    | Mayor que                    |  >
+|    | Mayor o igual que            |  >=
+|    | Comparación de tipos         |  instanceof
+|  8 | Igual a                      |  ==
+|    | No igual a                   |  !=
+|  7 | Si binario                   |  &
+|  6 | O exclusivo binario          |  ^
+|  5 | O inclusivo binario          |  |
+|  4 | Si logico                    |  &&
+|  3 | O logico                     |  ||
+|  2 | Condicional ternario         |  ?:
+|  1 | Asignacion                   |  =
+|    | Suma y asignacion            |  +=
+|    | Sustraccion y asignacion     |  -=
+|    | Multiplicacion y asignacion  |  *=
+|    | Division y asignacion        |  /=
+|    | Modulo y asignacion          |  %=
 
 1) x = y--;  Primero se asigna. Después se decrementa. 
 			 x es mayor que y después de la ejecución de esa instrucción
@@ -137,31 +286,48 @@ Pej: puedes tener una clase anónima que implementa una interfaz y funciona sin 
    
 8) Para tu sorpresa, el código siguiente, funciona 
 
-class ScopeTest{    
-static int x = 5;    
+	class ScopeTest{    
+	static int x = 5;    
+	
+	public static void main(String[] args){       
+	
+	int x  = ( x=3 ) * 4;  // 1       
+	System.out.println(x);    
+	
+	} } e IMPRIME 12
 
-public static void main(String[] args){       
+	x es en todo momento la variable local que hace sombra (shadows)
+	a la variable estática x
 
-int x  = ( x=3 ) * 4;  // 1       
-System.out.println(x);    
+	Y FUNCIONA PQ (x=3) está entre paréntesis. Sólo por eso
+	si no lo estuviera, se intentaría acceder al valor de x
+	antes de iniciarla y daría fallo
+	
+	int x = x* 4; //FALLo
+	int x = x; //FALLo
 
-} } e IMPRIME 12
+	extra!
+	var x = ( x=3 ) * 4//esto FALLA tb porque no puedes referenciar a la propia variable usando x
 
-x es en todo momento la variable local que hace sombra (shadows)
-a la variable estática x
+9) s+= s + ++s;
 
-Y FUNCIONA PQ (x=3) está entre paréntesis. Sólo por eso
-si no lo estuviera, se intentaría acceder al valor de x
-antes de iniciarla y daría fallo
+siendo s = 5, sería
 
-int x  =  x* 4; //FALLo
-int x  =  x; //FALLo
+s = s + s + ++s;
+s = 16!!!!
 
-extra!
-var x  = ( x=3 ) * 4//esto FALLA tb porque no puedes referenciar a la propia variable usando x
-
+10) Al hacer casting de int a float se pierde presición ....y ya no son exactamente el mismo si vuelvo del float al int
     
+11) int z += 4 * x; NO VA porque lo que va en la parte derecha (z) debe tener un valor antes
 
+12) ~5 --> -6
+	~-6 --> 5
+	
+	operador bytewise
+	
+	cambiamos el signo y restamos uno
+
+13) NO ES LO MISMO += que =+
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 			 
@@ -173,6 +339,44 @@ var x  = ( x=3 ) * 4//esto FALLA tb porque no puedes referenciar a la propia v
 2) Con switch (enumerado)
 	case Enumerado.VALOR -> ... ERROR! No puede usarse Enumerado.
 								DIRECTAMENTE hay que usar VALOR
+								
+3) El orden con case default puede estar alterado
+
+4) El Case VALOR siempre debe ser conocido en COMPILACIÓN no valen métodos.
+	
+	4.1) cosa curiosa ADMTE variables final!!!
+
+5) DADO public enum Switch{ ON, OFF }
+	
+	return switch(s) {    case OFF -> 1; }; --> INCORRECTO
+	
+	cuando usamos el switch para que devuelva un valor, 
+	debe abarcaer también caso ON o default
+	algo para que siempre devuelva !! 
+	
+6) ¿cUÁNTAS LÍNEAS SON INCORRECTAS?  4!! 
+
+class TreeClimber {
+2:     static enum A {
+3:        SQUIRREL { String sing() {return "chirp"; }}, 
+4:        CHIPMUNK; //1, FALTA IMPLEMENTAR 
+5:        abstract String sing();
+6:     } }
+7:  public sealed class ParkFriend //4, COMO LA CLASE ES SEALED, AL MENOS NECESITA QUE 1 CLASE HEREDE DE ELLA 
+{
+8:     public static void main(String... bark) {
+9:        TreeClimber.A a = TreeClimber.A.CHIPMUNK;
+10:       var c = switch (a) {
+11:          case TreeClimber.A.SQUIRREL -˃ {yield 'S';} //2 SE USA SOLO SQUIRREL
+			//3, FALTA OTRO CASO O DEFAULTS
+12:       };
+13:       System.out.print(a.sing() + " " + c);
+14:    } }
+
+7) Si el valor del switch es asignado /usado se deben poner todos los casos o DEFAULT
+   si no, no es necesario.
+   
+8) Swithc(null) --> BOOM null pointer exception
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 
@@ -197,11 +401,15 @@ var x  = ( x=3 ) * 4//esto FALLA tb porque no puedes referenciar a la propia v
 4)  byte b = 1;   char c = 1;   short s = 1;   int i = 1
 	s = b * b ; -- incorrecto devuelve un entero
 	s *= b ; -- correcto: las asginaciones compuestas hacen un casting explícito
+	b = '1' --> Correcto"
 	
 5) si haces una división de 
 	valor = float / 0 No DA EXCEPCIÓN
 	el valor asume constante Float.POSITIVE_INFINITY or negative
 	lo cual a su vez hace que Float.isInfinite(valor) de true
+	
+	Float.parseFloat("-Infinity") --> da valor  Float.NEGATIVE_INFINITY
+	Float.parseFloat("NaN") --> Float.NaN
 	
 6) los float tiene precisión de 6 dígits
 	si pasas de int a float, se pierde precisión
@@ -246,6 +454,20 @@ var x  = ( x=3 ) * 4//esto FALLA tb porque no puedes referenciar a la propia v
 		long maxLong = 0x7fff_ffff_ffff_ffffl;
 		byte nybbles = 0b0010_0101;
 		long bytes = 0b11010010_01101001_10010100_10010010;
+		long g = 012; --> prefijo OCTAL -- números del 0 al 7 
+		
+		long g = 0128; --> XXX prefijo OCTAL FAALLARÍA
+		float f = 4.0; --> FALLO, no puedo asignar un double a float sin casting
+		
+		OJO que se pueden incluir guiones bajos seguidos tantos como se quierasn
+		int = 5__0 es válido :S
+		
+10) return (long) by/d*3; //esto devuelve un tipo double...el long sólo aplica a by
+
+11) no puedo pasar un dolbe a float sin casting
+
+     float d = 0 * 1.5; // ESTO FALLA
+
 
 //VAR 
 
@@ -255,6 +477,24 @@ var x  = ( x=3 ) * 4//esto FALLA tb porque no puedes referenciar a la propia v
 2) var n; n = 0; -- INCORRECTO! no se puede declarar var sin inicializar	
 
 3) VAR sólo puede ser usado para variables locales dentro de un método
+
+4) No se puede usar var en conjunción con un array
+
+	var ia[][] = { {1, 2}, null }; --> XXX INCORRECTO
+	var ia = new int[][]{ {1, 2}, null }; --> CORRECTO 
+
+5) //byte n = 300; no compila" BYTE NO DA LA VUELTA
+   // s/e byte n = (byte)300.45 Sí compila """ --> si haces casting explícito trunca
+   byte n = 5;
+   switch (n)
+   {
+   	case 256: Tampoco compila
+   } 
+   
+6) var no se puede inicializar a null
+
+7) var n =3, i=5;  INCORRECTO no puede usarse var con múltiple variable de asignación
+
 
 ---------------------------------------------------------------
 --------------------------------------------------------------- 
@@ -303,6 +543,8 @@ luego la llamada a.print() hace 4
 
 2) En un constructor no puedes llamar a super y this. o llamas a uno o a otro.
 
+	2.1) en la primera linea!!!
+
 3) super() no se llama/pone automáticamente si hay constructor explícito
    con algún argumento
    
@@ -310,6 +552,7 @@ luego la llamada a.print() hace 4
 
 5) Sólo en un constructor puedes iniciar/asignar una variable static
    
+6) si una clase hereda de otra, super() se llama automáticamente   
 ------------------------------------------------------------------
 ------------------------------------------------------------------
 
@@ -321,7 +564,7 @@ are no references pointing to that object.
 2. You cannot directly invoke the garbage collector. You can suggest the 
 JVM to perform garbage collection by calling System.gc()
 
-3. Ojo con el Recolectory las tampas 
+3. Ojo con el Recolector y las trampas 
 
 public class Buddy {     
 	Buddy upper;     
@@ -348,4 +591,145 @@ public class Buddy {
 
 //INTEGER
 
-1. Integer.parseInt(string, base) si sale del rango de int da fallo
+1.) Integer.parseInt(string, base) si sale del rango de int da fallo
+
+2) int d = 9;
+	puedo hacer casting
+		(dobule)
+		(int)
+		(long)
+		(Object) -autoboxed en Integer-
+		
+3) char - int
+
+	NO Puedes hacer char = int -- piensa en el rango de int...pero si fuera constatne sí FINAL
+	pero sí int = char 
+		
+
+//VIRTUAL CALL
+
+cuando hay polimorficos y en tiempo de ejecución se dedice a qué método de instancia llamar
+
+//CÓDIGO INALCANZABLE
+
+while (false) { x=3; } --> esto es ERROR de COMPILACIÓN
+
+if (false) { x=3; } --> esto con IF compila, y es una excepción de la JSL
+
+
+//char 
+
+char c; //c es vacío
+
+al hacer 
+
+int x = (int) c --> x/ valdría/imprime 0
+
+
+//AUTOBOXING
+
+Este concepto sólo aplica a tipos primitos o wrappers de primitivos
+
+
+final Integer song = 6; //autobox permitido sólo con INTEGER
+final Long song = 6; //autobox NO permitido
+
+//byte
+
+1)byte llega hasta -128..127
+
+switch( m ){      
+case 32  -> System.out.println("32");      
+case 64  -> System.out.println("64");      
+case 128 -> System.out.println("128");   } --> falla da error de compi si m es byte
+
+//WHILE DOWHILE
+
+las llaves son opcionales
+pero los paréntesis de la condición no
+
+// INICIALIZACIÓN
+
+Hay que inicializar las variables locales
+si no, si se leen antes de asignarse, salta un fallo de compliación
+
+
+//StringBuilder
+
+no redefine equals, usa el de OBJECT :S
+
+sb.delete(0, sb.delete) --> vacía el método
+
+sb.insert(2, "x") insrta y desplaza
+
+// NULL
+
+puede ser pasado en cualquier referencia a objeto como parámetro actual
+
+// MODIFICADORES DE UN MÉTODO
+
+	static, private y final --> NO PUEDEN IR CON abstract pq no pueden ser sobreescritos
+	
+	private final --> Sí se pueden combinar, aunque sean redundantes
+
+	
+//BOOLEAN
+
+		Boolean tested = null;
+		Boolean fixed = 1<3 ? true : null;
+		
+		A un objeto Boolean le puedo asignar null
+		si accedo a él, con ese valor, da la excepción
+		
+//CASTING
+
+SEAN AA extends A
+y tenga
+  
+  AA aa = null;
+  A a = null;
+  
+ PUEDO HACER
+ 
+	a = (AA)aa;
+	
+//CLONE 
+
+si clonas 2 arrays, el array en sí tiene una dirección de memoria
+pero los objetos en él son los mismos
+		
+// WRAPPERs
+
+All the wrapper objects are immutable. 
+As you can see, a different Integer object is assigned back to i.  
+
+However, to save on memory, Java 'reuses' all the wrapper objects whose values fall 
+in the following ranges:  
+All Boolean values (true and false) 
+All Byte values All Character values from \u0000 to \u007f (i.e. 0 to 127 in decimal) 
+All Short and Integer values from -128 to 127
+
+
+//STATIC
+
+1) Si una clase tiene el bloque Static y sólo lo declaro
+
+Clase c = null; no se invoca su sección static
+
+Si hiciera
+
+Clase c = new Clase() se invocaría la sección static de su padre y la suya
+
+//NULL
+
+Si llamas a método (null) se va al más específico 
+( no a object, al contrario, se iría a sTRIGN)
+
+// SERIALIZABLE
+
+La clase de que la heredas que no es serializable priemra en la jerarquía
+debe tener método constructor por defecto
+
+//OPTIONAL
+
+Optional.ofNullable(null) --> crea un Optional.empty!!

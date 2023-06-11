@@ -1,10 +1,18 @@
 //COLEECIONES
 
-1) List.copyOf y List.of son métodos factoría estáticos que no admiten nulos como 
-parámetros. En caso de recibir algún nulo, lanzan una excepción
+0) List.set(poscion ,valor) reemplaza el valor en la posición si lo hay
+
+1) List.copyOf y List.of son métodos factoría estáticos que no admiten 
+nulos como parámetros. En caso de recibir algún nulo, lanzan una excepción
+
+   1.1) si reciben una lista esta lista tampoco puede tener nulo! excption
 
 Ojo porque además estos métodos devulven listas NO modificables - cualquier método de
 añadir, elimnar o modificar provoca fallo UnsuportedOperationException 
+
+aunque no lleguen a ejuctar un borrado...su simple ivocacion removeIf(false)
+
+Pero el estado de los objetos que componen la lista sí es mutable!!!
 
 2) Hay métodos que crean vistas (bridging, views o backed) que en realidad
 apuntan a la lista de orginal (no son nuevas listas)
@@ -31,6 +39,8 @@ apuntan a la lista de orginal (no son nuevas listas)
    que hay concordancia de tipos (cosa que no pasa con Object)
    Además de permitir un uso más eficiente el uso de la memoria
    
+   
+   
 
 5) OjO ? SUPER extends
 
@@ -42,8 +52,11 @@ apuntan a la lista de orginal (no son nuevas listas)
 
 	<<Por eso que List<? super Number> sería un subtipo de List<? super Integer> -->>
 
+	ArrayList<Number> is a subtype of List<? super Integer>
 
 	5.1) super SÓLO PUEDE USARSE CON ?
+
+#En realidad super es una frontera baja lower bound y extends una frontera alta upper bound
 
 6) List<Integer> NO es una List<Object> 
    List<Integer> SÍ es una List <? extends Number>
@@ -127,7 +140,7 @@ apuntan a la lista de orginal (no son nuevas listas)
 	de qué tipo es: primitivos, clases normales, arrays, etc.
 	
 	Mientras que los no refiable, son List<Number> o List<Integer> a los que al quitar
-	por el type erausre el genérico, no puedes usar instaceof por ejemplp
+	por el type erausre el genérico, no puedes usar instaceof por ejemplo
 	porque no se sabe en ejecución de qué tipo es
 	
 17) Heap Pollution si tu usas List<T> y pasas elemntos T, bien, pero al quitarse
@@ -144,6 +157,7 @@ apuntan a la lista de orginal (no son nuevas listas)
 		sería
 		
 		Pair<Integer, Character> p = new Pair<>(8, 'a');
+		
 	- Cannot Create Instances of Type Parameters
 		no puedo hacer new T();
 		
@@ -152,7 +166,7 @@ apuntan a la lista de orginal (no son nuevas listas)
 		implicaría que varias instancias (de un tipo distinto)
 		tienen un mismo campo compartido (estático) de distinto tipo :S
 		
-	-	Cannot Use Casts or instanceof With Parameterized Types
+	- Cannot Use Casts or instanceof With Parameterized Types
 	
 		prohibido	List<?> list 
     				if (list instanceof ArrayList<?>)
@@ -160,11 +174,11 @@ apuntan a la lista de orginal (no son nuevas listas)
     	prohibido	List<Integer> li = new ArrayList<>();
 					List<Number>  ln = (List<Number>) li;  // compile-time error
 
-	-	Cannot Create Arrays of Parameterized Types
+	- Cannot Create Arrays of Parameterized Types
 	
 		prohibido List<Integer>[] arrayOfLists = new List<Integer>[2];
 
-	-	Cannot Create, Catch, or Throw Objects of Parameterized Types
+	- Cannot Create, Catch, or Throw Objects of Parameterized Types
 	
 		prohibido catch (T e) {   // compile-time error
 		
@@ -172,10 +186,156 @@ apuntan a la lista de orginal (no son nuevas listas)
 		
 		PERMITIDO public void parse(File file) throws T
 
-	-	Cannot Overload a Method Where the Formal Parameter Types of 
+	- Cannot Overload a Method Where the Formal Parameter Types of 
 		Each Overload Erase to the Same Raw Type
 		
 		prohibido
 					public void print(Set<String> strSet) { }
     				public void print(Set<Integer> intSet) { }
 		
+19) Exiten NavigalbeMap y NavigableSet ( que hereda de SortedSet - orden natural-)
+
+20) Parametriza los genéricos con INterface Funcionales como Predicate<Data>
+	si no, asumen Object y no funciona siempre
+
+	
+21) Optional.of(null)--> tira una excepción!
+	Optional.ofNullable (valor) --> sería lo correcto si el valor puede ser null
+	
+22)
+
+ESTO DA FALLOOOO!!!
+
+public static void main(String[] args) throws Exception {         
+List list = new ArrayList();         
+list.add("val1"); //1         
+list.add(2, "val2"); //2 <------ en la línea 2 porque no existe la posición 2 donde se va a insertar aún         
+list.add(1, "val3"); //3         
+System.out.println(list);      
+}
+
+22.1) OJO Con Collection.add que devuelve true!
+
+23) LinkedList Matiene el orden de insercción, igual que ArrayList
+
+24)  Collections.sort(Arrays.asList(sa), null); NO DA FALLO DE NULL, da fallo si
+	 los miembros del primer argumento no son Comparables entre sí :)
+	 
+	 
+
+25) Queue
+
+Queue ˂Integer˃ q = new LinkedList˂˃();
+q.add(10);
+q.add(12);
+q.remove(1);
+System.out.print(q);
+
+
+imprimiría 10 y 12, porque remove (posicion) no existe en quee
+imprimiría 10 si se usa una Lista en vez de una cola, porque sí existe la posición y se elige de 
+forma prerente
+
+26) TreeSet no puede contener nullos
+	si le intentas meter nulos al treeset, da fallo
+	
+	porque al insertar ordenado, intenta comparar null y da fallo
+	Igual pasa en TreeMap...no puede haber claves null
+	aunque sí Valores null
+	
+27) Set.subset devuelve un navigable Set en un rango.
+    Si añdes un elemento fuera de ese rango, fallará
+    IllegalArgumentException
+
+//GENÉRICOS
+
+1)
+
+<T> en una clase/registros o en un tipo/método, pueden ser distintos tipos
+aunque sean la misma letra
+
+public record Hello<T>(T t) 
+{
+   public Hello(T t) { this.t = t; }
+    private <T> void println(T message) {
+       System.out.print(t + "-" + message);
+    }
+    public static void main(String[] args) {
+       new Hello<String>("hi").println(1);
+       new Hello("hola").println(true);
+    } 
+  }
+  
+2) 	List<?> q = List.of("mouse", "parrot");<--Se instancia como List<Object> (no podemos aplicar operador de String a sus elementos)
+	var v = List.of("mouse", "parrot");<--Se instancia como List<String>. Se infiere (Sí podemos aplicar operador de String a sus elementos)
+ 
+3) 
+		class Booby{ } 
+		class Dooby extends Booby{ } 
+		class Tooby extends Dooby{ }
+
+		List<? extends Booby> bV = new ArrayList<Booby>(); -- OK funciona!
+		List<? extends Booby> bV = new ArrayList<Tooby>(); -- OK funciona!
+		
+		
+		List<? super Dooby> dV = new ArrayList<Tooby>(); --- falla X
+
+4) 
+		"TODOS LOS STRINGS SON OBJECTS
+		PERO NO TODOS LOS OBJECTS SON STRINGS"
+
+		class Booby{ } 
+		class Dooby extends Booby{ } 
+		class Tooby extends Dooby{ }
+
+		List<? extends Booby> bV = //
+		List<? super Dooby> dV = //
+		
+		
+		bV.add(new Dooby(){ }); -- ERROR
+		
+		/*FALLA. No tengo la garantía de que en esa lista, lo que tengan
+		sea instancias de Dooby. Podría ser una lista de Tobbys. 
+		y Rompería la homogeneidad!!
+		*/
+		
+		
+		dV.add(new Dooby(){ }); -- funciona OK!
+		
+		/*FUNCIONA. Porque lo que tengo en esa lista es sí o sí, 
+		es un supertipo de Dooby. Al menter Dooby, no fastidio 
+		la homogenieidad. Todos los elementos son Doobys o superior.*/
+		
+		
+5) El típo genérico de un método va delante del tipo devuelto 
+	
+		<T> void o
+		<T> T
+		
+6)  
+DISTINTO TIPO DE GENÉRICO Y CLASE
+
+class MyGenericClass<T>
+{     T t;     
+public <P> String transform(P p){ //<---- Using a different name P here instead of T         //
+this.t = p; //will NOT compile         return p.toString()+"-"+p.hashCode();     
+} 
+}   
+
+MISMO TIPO DE GENÉRICO EN MÉTODO Y CLASE
+
+class MyGenericClass<T>
+{     
+	T t;     
+	public String transform(T t)//<-- removed <T> from this line  
+	{          
+		this.t  =  t; //valid because T is same for the class and for the method         
+	return t.toString()+"-"+t.hashCode(); //now t is same as the type used for the class     
+} 
+}  	
+		
+//QUEUE
+
+LinkedList implementa esta interfaz!!! (ArrayList no lo hace)
+
+ArrayList Implementa RandomAccess y Hereda de AbstractList

@@ -1,5 +1,8 @@
 package jcp17.clasicas;
 
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
+
 public class InmutableEjemplo {
 	
 	
@@ -36,6 +39,11 @@ public class InmutableEjemplo {
 			} else {
 				System.out.println("Son distintas 1 ");
 			}
+			
+			var stream = LongStream.of(1, 2, 3);
+			var opt = stream.map(n->n * 10).filter(n->n<5).findFirst();
+			if (opt.isPresent())
+				   System.out.println(opt.getAsLong());
 		
 		return contiene; 
 	}

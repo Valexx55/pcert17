@@ -1,0 +1,41 @@
+//SEALED CLASES
+
+1) No se puede declarar a la vez non-sealed y final - son contradictorios -
+
+2) Las clases selladas con realación deben estar en el mismo módulo
+
+3) No puede haber una clase sellada y final...es contradictorio
+
+4) Si una clase es Sealed, AL MENOS NECESITA QUE 1 CLASE HEREDE DE ELLA! 
+
+5) Pero si tengo una Sealed y dentro del mismo archivo otras que heredan NO HACE FALTA permits
+
+6) permits opcional si están en la misma clase
+
+//RECORDS
+
+1) Puedo tener todos los constructores sobrecargados que quiera en la definición
+   de un RECORD
+   	
+   		Debe haber uno canónico. COMPACTO O NO.
+
+2) Un record puede sobreescribir los métodos de acceso!!!!
+
+
+3) Un record es implícitamente final, por lo que no puede ser abstract
+
+4) El record crear automáticamente
+ 
+	getters por el nombre
+	constructor canónico, 
+	equals, hashCode, y toString
+
+5) un Record no puede heredar de una clase
+   luego una selead class no puedo usar de permits a un Record
+   así como un Record no puede heredar de una clase
+
+6) lo que si puede un record es implementar Interfaces
+
+7) no puede definir atributos de instancia (si estáticos)
+
+8) pero métodos sí puede, tanto de instancia como estáticos  

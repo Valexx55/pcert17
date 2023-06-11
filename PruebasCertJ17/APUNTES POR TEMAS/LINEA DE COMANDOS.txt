@@ -1,15 +1,16 @@
 //LINEA COMANDOS 
 
 1) jdeps -summary (-s) <Clase> 
-   y te lista todos los m贸dulos dependientes/usados por esa Clase
+   y te lista todos los m骴ulos dependientes/usados por esa Clase
    
 2) jdeps --jdk-internals
-   te lista todos las depedencias de tu c贸digo o JAR con el API Interna del JDK
-   si encuentra una depdencia, te siguiere un cambio
-   las APIs internas son clases no soportadas, privadas, que est谩n marcadas para excluirse en
-   futuras versiones del API
+   te lista todos las depedencias de tu c骴igo o JAR con el API Interna del JDK
+   si encuentra una dependencia, te siguiere un cambio
+   ya que las APIs internas son clases no soportadas, privadas, NO son est醤dar
+   dependen de la implementaci髇 privada del JDK
+   que est醤 marcadas para excluirse en futuras versiones del API
    
-   hace un an谩lisis est谩tico: es decir --> descubure las dependecias en compilaci贸n
-   si durante la ejecuci贸n, por reflexi贸n, se usara alguna clase m谩s, no es detectada
+   hace un an醠isis est醫ico: es decir --> descubure las dependecias en compilaci髇
+   si durante la ejecuci髇, por reflexi髇, se usara alguna clase m醩, no es detectada
    por este comando
    

@@ -4,17 +4,67 @@
 
 2) No puedes heredar de un enumerado
 
-3) S/e puedes declarar un mÃ©todo abstratacto en el enum y que cada clase/tipo 
-   lo sobreescriba dentro de sÃ­. (raro, pero vero Type)
+3) S/e puedes declarar un método abstratacto en el enum y que cada clase/tipo 
+   lo sobreescriba dentro de sí­. (raro, pero vero Type)
 
-	3.1) El enumerado puede definir un mÃ©todo abstracto si todos los subitpos lo implementan
+	3.1) El enumerado puede definir un método abstracto si todos los subitpos lo implementan
 
-4) No puedes sobreescribir equals en un enumerado
+4) No puedes sobreescribir equals en un enumerado Ni clone()
 
 5) Una instancia de enum NO es inmutable (puede cambiar su estado/valor) sin declararse
    uno nuevo.
    
 6) Ojo con la sintaxis del enumerado. Siempre debe acabar en PUNTO y COMA ;
-   si estÃ¡ declarado dentro de una clase (como suele ser)
+   si está declarado dentro de una clase (como suele ser)
    
-7) El enumerado tiene un constructor privado (no puede tener pÃºblico)
+7) El enumerado tiene un constructor privado (no puede tener público)
+
+8) Lo primero del enumerado es su enuimración de tipos...siempre lo pRIMERO
+
+9) En enumerado puede implemntar cualquier interfaz (Serializable incluida)
+
+10) Desde un constructor no puedes acceder a una variable static que no sea final
+
+11) Si declaras un constructor, y creas una instancia con ese constructor,
+    y quieres crear instancias sin constructor, debes implementar el por defecto
+
+12) Puedes definir un enumerado dentro de un método. Ahora, no puedes aplicarle modificador
+    de visilibidad....pues es una variable local.
+    
+
+	
+14) Métodos de Enum:
+ 
+	-final name():String como toString
+	-final ordinal():int  devuelve la posición en que está declarado la instancia Enum
+	-static Enum.valueOf (Class, String) : T
+	-final clone () --> NO PUEDE SOBREESCRIRSE por ningún T
+	-final equals (Object) --> NO PUEDE SOBREESCRIRSE por ningún T
+	
+	
+	-- métodos implícitos añadidos por el compilador --
+	- static valueOf(String): Enum devuelve el tipo Enum asociado a ese nombre - Tira Except si no coincide
+	- static values(): T[]
+	
+15) public enum EnumA implements I, Serializable { A, AA, AAA}; -->>>> FUCIONA!!!
+
+16) Enum implementa COmparable. Su orden natural es el ordinal()
+
+17) No puedes crear Instancias con new T.value()
+
+18) Enum se pueden comprar con == o equals
+
+19) switch(s) {     
+
+		
+		case Switch.OFF -> System.out.println("It is off!"); break; -- MAL
+				|1 .- sobran Swith
+				|2 .- por Ser más de una instruccción faltan llaves { } 
+		
+		
+		case OFF -> {   System.out.println("It is off!"); break;}  -- BIEN
+		 
+		}
+
+20) El enumerado tiene que llevar ; si depués de los tipos T1, t2, t3; meten métodos
+    si no, no hace falta

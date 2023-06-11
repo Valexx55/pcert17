@@ -1,5 +1,6 @@
 package jcp17.fechas;
 
+import java.sql.Types;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -14,6 +15,7 @@ public class FechasFormatos {
 		//DateTimeFormatter sdf = DateTimeFormatter.ofPattern("mm/yy");//error
 		System.out.println(sdf.format(LocalDate.now()));
 
+		
 	}
 
 }

@@ -1,7 +1,7 @@
 
 //ETIQUETAS LABELS
 
-1) Puedes referir a esa etiqueta pero fuera de la secciÃ³n indicada por la 
+1) Puedes referir a esa etiqueta pero fuera de la sección indicada por la 
    etiqueta/dentro de otra
    
 -------------------------------------------------------------------------
@@ -9,10 +9,10 @@
 
 //SECCIONES BLOQUES
 
-1) Puedes definir una secciÃ³ de cÃ³digo entre llaves ({}) sin ningÃºn if/else asociado!
+1) Puedes definir una sección de código entre llaves ({}) sin ningún if/else asociado!
    - y se ejecutarÃ­a siempre -
    
-2) Una mÃ©todo puede declarar dos variables locales con el mismo nombre
+2) Una método puede declarar dos variables locales con el mismo nombre
    ej:
    	
    	void twoVars() {
@@ -20,3 +20,43 @@
   		{ int i = 1; } // OK
 	}
 	
+3) do 
+	{
+	if (cc) continue;
+		i1; //i1 e i2 se ejecutan sií cc no se cumple 
+		i2; //si se cumple, hace saltar al continue hasta while
+	} while (cond)
+	
+4) Cuando has 
+
+ for (var value : arr) {
+			if (counter >= 5) {
+				break;
+			} else {
+				continue;
+			}
+			//////////////*****************CÓDIGO
+			if (value > 4) {
+				arr[counter] = value + 1;
+			}
+			counter++;
+			**/////////////////INALCANZABLE ERROR DE COMPILACIÓN
+		}
+	
+//TEXT BLOCKS
+
+	si las """ comillas de cierre están en otra línea, se mete un intro \n
+	
+// INSTANCE OF
+
+1) ESTE CÓDIGO FALLA
+
+	static void processBase(Base base)
+	{       
+		A a = null;       
+		if(base instanceof A a ) <--- AQUÍ....no puede darse a exisitendo ya a en ese ámbito
+		{          
+			System.out.println(a.power());       
+		}       
+	    System.out.println("a is "+a);   
+	}

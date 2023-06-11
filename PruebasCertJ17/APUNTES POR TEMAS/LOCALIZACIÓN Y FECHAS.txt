@@ -1,11 +1,150 @@
-//LOCALIZACIÃ“N
+//LOCALIZACIÓN
 
-1)mÃ©todos vÃ¡lidos para determianr el LOCALE a la instancia de JVM
+1)Métodos Válidos para determinar el LOCALE a la instancia de JVM
 
  Locale.setDefault(Locale.Category.DISPLAY, Locale.US);//determina el Locale para mostrar
  Locale.setDefault(Locale.Category.FORMAT, Locale.US);//determina el Locale para formatear
  Locale.setDefault(Locale.US);
- 
- LocalDate, LocalTime, LocalDateTime, Period, and Duration del paquete
- java.time package son INMUTABLES (se crea un nuevo objeto al modificar la propiedad)
  	
+ 	
+ 2) Duration.between (p1, p2) necesita que p1 y p2
+ necesitan periodos que tengan TIEMPO!! 
+ 
+ Duration d = Duration.between(LocalDate.now(),LocalDate.of(2022, Month.SEPTEMBER, 1))
+ 
+ por ejemplo el aanterior FALLARÍA pq lOCALDATE no tiene componente hora/tiempo.
+ 
+ 3)
+ 
+ 5: var fr = new Locale("fr");
+6: Locale.setDefault(new Locale("en", "US"));
+7: var b = ResourceBundle.getBundle("Dolphins", fr);
+8: b.getString("name");
+9: b.getString("age");
+
+Con estos ficheros de propiedades
+
+
+Dolphins.properties
+name=The Dolphin
+age=0
+
+Dolphins_en.properties
+name=Dolly
+age=4
+
+Dolphins_fr.properties
+name=Dolly
+
+se tiraría de estos fr y luego del properties genérico
+después de la linea 7, que especifica un locale, no se usa el default 
+
+4) Puedo hacer
+
+Locale l = Locale.US;
+Locale myLocale = Locale.getDefault()
+Locale myLocale = new Locale("ru", "RU")
+ 
+//FECHAS Y FORMATO
+ 
+1) Para formateo de fechas
+ 
+  m, M, d, D, e, y, s, S, h, H, and z.
+  
+  Less than 4 pattern letters will use the short form. "Mon" 
+  Exactly 4 pattern letters will use the full form. "Monday"
+  Exactly 5 pattern letters will use the narrow form. "M"
+  
+  Pattern letters 'L', 'c', and 'q' specify the stand-alone form of the text styles.
+  
+  java.time para respresentar el tiempo
+  
+  LocalDate
+  LocalDateTime
+  LocalTime
+  
+   LocalDate, LocalTime, LocalDateTime, Period, and Duration del paquete
+   java.time package son INMUTABLES (se crea un nuevo objeto al modificar la propiedad)
+  
+  java.time.format
+  DateTimeFormatter para formatear --> no puede instanciarse!!! new privado
+  
+//FECHAS Y TIEMPO
+
+
+1) LocalDate no tiene ni idea del TIEMPO o ZONA peJ 27-06-2003	
+
+2)
+DESDE JAVA 8, java.time 
+java.util.Date No se recomiendan más
+desde entonces
+
+	-java.time Package: Java Date Time API. 
+	LocalDate, LocalTime, LocalDateTime, Instant, Period, Duration
+	All of these classes are immutable and thread safe. 
+
+	-java.time.format Package: 
+	Formatting and parsing date time objects such as java.time.format.DateTimeFormatter.
+
+
+ 
+3) 
+2022-02-05 LocalDate
+17:23:27.847459200 LocalTime
+2022-06-25T19:13:30 LocalDateTime
+2022-06-25T16:13:30Z Instant
+P-8M-19D Periodo
+PT-6241H-34M-28.3522066S Duracion
+
+4)
+	LocalDateTime book = LocalDateTime.of(2022, 4, 5, 12, 30, 20);
+   System.out.print(book.format(DateTimeFormatter.ofPattern("m"))); // 30 minutos
+   System.out.print(book.format(DateTimeFormatter.ofPattern("z"))); //no hay zona, peta
+   System.out.print(DateTimeFormatter.ofPattern("y").format(book)); // 2022 year año
+   
+5) 
+
+var f = DateTimeFormatter.ofPattern("hh o'clock");
+System.out.println(f.format(_________________.now()));
+
+da error por que lo correcto sería "hh' o''clock'" //hay que escapar
+
+y f podría ser cualquier tipo que tenga Hora (LocalDate no)
+
+6) var d = Duration.of(1, ChronoUnit.WEEKS); no va porque Duración es Horas, Minutos o Segundos
+	TIRa excepción
+
+	PERIOD --> fechas días mes años
+	DURATION --> Tiempo o traducible a tiempo horas, minutos segudos...
+	
+7) INSTANT ES siempre en UTC
+
+Instant ins = Instant.now(); 
+System.out.println(ins)
+
+//HORARIO INVIERNO VERANO
+
+		var date = LocalDate.of(2022, Month.NOVEMBER, 6);
+		var time = LocalTime.of(1, 30);
+		var zone = ZoneId.of("US/Eastern");
+		var dateTime1 = ZonedDateTime.of(date, time, zone);
+		var dateTime2 = dateTime1.plus(1, ChronoUnit.HOURS);
+		
+		
+
+		System.out.println("dt1 = "+dateTime1);//dt1 = 2022-11-06T01:30-04:00[US/Eastern]
+		System.out.println("dt2 = "+dateTime2);//dt2 = 2022-11-06T01:30-05:00[US/Eastern]
+		
+		SON LA MISMA FECHA Y HORA porque ese día se cambia la hora y se hecha una para atrás
+		a las 2:30, son la 1:30, pero se ajusta el desfase respecto a UTC (meridiano cero)
+		
+		marzo --> más una hora
+		noviembre --> menos una hora
+// TIME Y DATE
+
+1) FALLA porque el formateo pide horas y la fecha LocalDate no tiene TIME!
+
+LocalDate date = LocalDate.parse("2022-04-30", 
+   DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+System.out.println(date.getYear() + " " 
+   + date.getMonth() + " "+ date.getDayOfMonth());

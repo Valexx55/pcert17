@@ -1,61 +1,91 @@
 
-//MÃ“DULOS
+//MÓDULOS
 
-1) Para poder empaquetar las librerÃ­as en un mÃ³dulo primero hay que hacerlas modulares
+1) Para poder empaquetar las librerías en un módulo primero hay que hacerlas modulares
 
-
-2) No es recomendable, pero se puede decir por linea de comandos quÃ© paquetes 
-   un mÃ³dulo exporta -mejor en el module-info.java-
+2) No es recomendable, pero se puede decir por linea de comandos qué paquetes 
+   un módulo exporta -mejor en el module-info.java-
    
 3) javac --module-source-path src -d out src/foo.bar/*/*.java 
 
-   Â¡Â¡INCORRECTO!! --> no puedes usar comodÃ­n (*) en los directorios
+   INCORRECTO!! --> no puedes usar comodín (*) en los directorios
 
 4) javac --module-source-path o --module debe especificar el directorio de 
    salida con -d
    
-5) module-path me permite indicar el path donde se encuentran otros mÃ³dulos (app modulares)
-   en dependencia con el mÃ³dulo que trato de compilar o ejecutar
+5) module-path me permite indicar el path donde se encuentran otros módulos (app modulares)
+   en dependencia con el módulo que trato de compilar o ejecutar
    
-   Tb puedo aÃ±adir mÃ³dulos ya compilados a entornos de ejecuciÃ³n con esa opciÃ³n
+   Tb puedo añadir módulos ya compilados a entornos de ejecución con esa opción
    
-   a module-path puede acompaÃ±arle un DIRECTORIO(S) o un JAR!!! 
+   a module-path puede acompañarle un DIRECTORIO(S) o un JAR!!! 
  
-	5.1) Tb con --module-source-path puedo aÃ±adir todo el cÃ³digo depedendiente 
-	y asÃ­ compilar el mÃ³dulo con todo lo necesario, sin necesidad de usar el 
+	5.1) Tb con --module-source-path puedo añadir todo el código depedendiente 
+	y así compilar el módulo con todo lo necesario, sin necesidad de usar el 
 	comando anterior
 	
-6) si un MÃ³dulo usa otro mÃ³dulo pero sÃ³lo temporalmente, puede indicarlo 
-   por lÃ­nea de comandos
+6) si un Módulo usa otro módulo pero sólo temporalmente, puede indicarlo 
+   por línea de comandos
    
-7) Un mÃ³dulo exporta sÃ³lo paquetes
+7) Un módulo exporta sólo paquetes
 
-8) El mÃ³dulo java.base es implÃ­citamente importado en cada mÃ³dulo que yo cree
+8) El módulo java.base es implícitamente importado en cada módulo que yo cree
 
-9) El paquete java.lang pertenece al mÃ³dulo java.base
+9) El paquete java.lang pertenece al módulo java.base
 
-10) Para modulizar un jar que ya existe, basta con aÃ±adir el fichero module-info.java
+10) Para modulizar un jar que ya existe, basta con añadir el fichero module-info.java
     debidamente
     
 11) --module-path para las clases compiladas / jar
-    --module-source-path para el cÃ³digo fuente en modulos
+    --module-source-path para el código fuente en modulos
 
 12) Si usas module-info, debes importar con require modulos como java.sql
-	que entiendo estÃ¡n fuera de java.base- entiendo-
+	que entiendo están fuera de java.base- entiendo-
 	si no, no hace falta (accedes a todo)
 	
 13) Si tienes un JAR ordinario y en su paquete por defecto una clase
-    esa clase no se va a poder usar como un mï¿½dulo automï¿½tico (requires en modulo con nombre)
+    esa clase no se va a poder usar como un módulo automático (requires en modulo con nombre)
     
-14) Al ejecutar un mÃ³dulo, puede omitirse -m nombre.modulo/Clase, puesto 
+14) Al ejecutar un módulo, puede omitirse -m nombre.modulo/Clase, puesto 
    que el manifest del Jar puede incluir el atributo Main-class	
+   
+   aunque la versión completa sería:
+   
+   java --module-path training.jar;course.jar --module enthu.training/com.enthu.training.StartGUI
   
    
-15) -classpath sÃ³lo tiene sentido al compilar cuando quieres
+15) -classpath sólo tiene sentido al compilar cuando quieres
    que clases no modulares usen otras no modulares
    
-16) Nunca puede exportarse clases. SÃ³lo paquetes.
+16) Nunca puede exportarse clases. Sólo paquetes.
+
+17) el módulo java.desktop incluye las clases de Swing (entorno gráfico de Java)
+	y no está incluidos en los módulos por defecto. Hay que add la depedencia
+	explícitamente
+	
+18) Si quieres modularizar un jar, add el module-info con su exportaciones
+    podrá usarse por clases antiguas si está en el classpath, como otro jar
+    y por los nuevos proyectos modulares
   
+19) module-info.java se compila en module-info.class !!!
+
+20) El código fuente puede estar en cualquier sitio s/e se asume que 
+    module-info.java en el directorio que coincide con el nombre del módulo
+    
+       
+    module enthu.finance {   exports com.enthu.Reports;   requires enthu.utils; }
+    
+    su module-info.java estaría en el directorio enthu.finance
+    
+21) puedo exportar un paquete sólo a un módulo así:
+
+module A {     exports internal.utils to B; }
+
+22) Una appp sí puede convertirse en modular
+    Un jar no puede convertirse en un named-module 
+    Sí en automático, pero no en named
+    
+23) SI hay un mismo paquete en el module-path y el class path, prevalece el del module-path
  ---------------------------------------------------------------------------
  ---------------------------------------------------------------------------
    
@@ -67,24 +97,44 @@
 	
 	module foo.filter
 		{   
-		 requires api;   
+		 requires api; //API ES UN modulo...NO UN PAQUETE   
 		 provides api.Filter with foo.DoNothingFilter; 
 		}
 
 
 	Debe haber una clase DoNothingFilter que o bien implemente Filter
-    -e implmente todos los mÃ©todos y ademÃ¡s un constructor por defecto con 0 argumentos-
+    -e implmente todos los métodos y además un constructor por defecto con 0 argumentos-
 
-	O bien la clase DoNothingFilter tiene un mÃ©todo 
+	O bien la clase DoNothingFilter tiene un método 
 		
 		public static provider Filter
 	
 	que devuelve una instanacia de Filter (que incluye 
-	la implementaciÃ³n de toda la interfaz )
+	la implementación de toda la interfaz )
 
-3) ServiceLoader tiene el mÃ©todo iterator() pero No services()
+3) ServiceLoader tiene el método iterator() pero No services()
 
-4) El Servicio (Service Provider) puede ser una clase, una interfaz o una anotaciÃ³n (no un Enum)
+4) El Servicio (Service Provider) puede ser una clase, una interfaz o una anotación (no un Enum)
+
+5) 
+
+Which of the following is a valid module-info 
+for a service user module that uses an Order service  
+defined in OrderServiceAPI module and 
+implemented by OrderServiceProvider module?
 
 
+
+module Customer{    
+
+	requires OrderServiceAPI;    
+	requires OrderServiceProvider;  xxxx sobra esta linea, aunque es válida  
+	uses com.orderservice.api.Order; 
+}
+
+6) jdeps jlink javac java usan --module-path o -p
+
+   jmod NO lleva ese parámetro
+   
+7) java --show-module-resolution y ejecución te da detalles de los módulos
  

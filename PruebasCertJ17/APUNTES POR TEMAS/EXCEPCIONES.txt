@@ -1,6 +1,6 @@
 //TRY-CON RECURSOS
 
-1) En el siguiente trozo de cÃ³digo, este TWR es incorrecto porque debe declararse
+1) En el siguiente trozo de código, este TWR es incorrecto porque debe declararse
 stmt dentro del try de tipo try (Statement stmt = c.create...)
 
 	Statement stmt = null;
@@ -8,12 +8,20 @@ stmt dentro del try de tipo try (Statement stmt = c.create...)
 	try(stmt = c.createStatement();)
 
 
-En Java 9, se modifica el TWR y tambiÃ©n es vÃ¡lido un stmt final/ final efectivo
-con solo una asignaciÃ³n a este
+En Java 9, se modifica el TWR y también es válido un stmt final/ final efectivo
+con solo una asignación a este
 
 	Statement stmt = c.createStatement(); 
-	try(stmt) { } //esto esto valdrÃ­a, pero no es el caso
+	try(stmt) { } //esto esto valdría, pero no es el caso
 	
+2) En un TWR los recursos se cierran en orden inverso en el que son declarados!""""
+
+3) Closeable hereda de Autocloseable
+
+4) El close de Autocloseable declara tira una Exception
+   El close de Closeable declara tira una IOException
+ 
+5) Si declaro un objeto en un TRY es final, no puedo volver a asignarlo en el try
 ----------------------------------------------------------
 ----------------------------------------------------------
 
@@ -23,27 +31,53 @@ con solo una asignaciÃ³n a este
 
 2) catch(NoSuchFileException|IOException|AccessDeniedException e) --> INCORRECTO
 
-	No puedes incluir excepciones en el mismo bloque catch que guarden relaciÃ³n
+	No puedes incluir excepciones en el mismo bloque catch que guarden relación
 	de herencia: NoSuch y Access heredan de IOException en este caso
 	
 3) Si tienes una clase padre que lanza IOException en el constructor
-   puedes tener una hija que lanze Exception (una mÃ¡s genÃ©rica) en el suyo
-   (no mÃ¡s especÃ­fica, ojo)
+   puedes tener una hija que lanze Exception (una más genérica) en el suyo
+   (no más específica, ojo)
    
-   esta norma es al reves sobreescribiendo en otros mÃ©todos que no son el constructor
-   o sea, un mÃ©todo del hijo puede lanzar una excepciÃ³n mÃ¡s especÃ­fica que 
-   el padre, pero no mÃ¡s genÃ©rica 
+   esta norma es al reves sobreescribiendo en otros métodos que no son el constructor
+   o sea, un método del hijo puede lanzar una excepción más específica que 
+   el padre, pero no más genérica 
 
-4) Si tienes varios catch asociados a un mismo try y dentro de un catch, tiras otra excepciÃ³n
-   con throws, Ã©sta no es capturada por otro catch, sino que se propaga al mÃ©todo llamante
+4) Si tienes varios catch asociados a un mismo try y dentro de un catch, tiras otra excepción
+   con throws, ésta no es capturada por otro catch, sino que se propaga al método llamante
    
-5) Si tienes un T_W_R y dentro de Ã©l se lanza una excepciÃ³n, Ã©sa es la que recibe el usuario
-   S/e si se produce una expceciÃ³n y luego se da una excecpiÃ³n al ejecutar el autocloseable
-   el usario recibe la expecciÃ³n de IOexception (la del try serÃ¡ surprimida - supresed exception-)
+5) Si tienes un T_W_R y dentro de él se lanza una excepción, ésa es la que recibe el usuario
+   S/e si se produce una expceción y luego se da una excecpión al ejecutar el autocloseable
+   el usario recibe la expección de IOexception (la del try será surprimida - supresed exception-)
    
 6) En un T_W_R el close se invoca al final del try!!! 
    de modo que el finally, si hay algun acceso
-  al recurso cerrado automÃ¡ticamente, fallarÃ­a
+  al recurso cerrado automáticamente, fallaría
+  
+
+7) El bloque finally siempre se ejecuta. si se ha tirado una excepción, ésta se lanza después
+pero el finally se ejecuta y simepre es así salvo que System.exit sea invocado
+
+8) Illegal Argument Expcetion es una Runtime (no tienes obligación de tratarla)
+
+9) ("12345".charAt(6)); DA una  IndexOutOfBoundsException
+   es lo que dice la docu y lo que hay que responder
+   
+   en realidad, se tira una subclase StringIndexOutOfBoundsException
+   
+10) Un bloque try siempre necesita llaves de apertura y cierre {}
+    Si es un try normal, o lleva catch o lleva finally
+    Si es un try-con-recursos, no hace falta que lleve ni try ni finally
+    
+11) Si un método tiene try catch finally y el catch no coincide con la excepción
+    propagada, se ejecuta el finally. Si el método tampoco hace throws de ese
+    tipo de excepción no se ejecuta nada después del finally.
+    
+12) Si una excepción no se captura, se podrá ejecutrar el finally, pero se acaba
+el método 
+
+13) si tiras throw null, se da una NullPointerException
+
+14) quedarse sin memoria es un Error (de la JVM) no una Exception
   
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -52,27 +86,30 @@ con solo una asignaciÃ³n a este
 
 
 1) Si es supertipo tiene Throws Exception en la cabecera, no es obligatorio
-   que la implementaciÃ³n lo tenga
+   que la implementación lo tenga
    
-   Pero si una implmentaciÃ³n lanza una CHECKED exception, es porque 
-   el supertipo tambiÃ©n lo tiene (si no falla)
+   Pero si una implmentación lanza una CHECKED exception, es porque 
+   el supertipo también lo tiene (si no falla)
    
 2) En constructores donde hay herencia, el subtipo debe declarar las mismas CHECKED
-   exceptions o supertipos de ella. Tb puede aÃ±adir mÃ¡s.
+   exceptions o supertipos de ella. Tb puede añadir más.
    
-3) En los mÃ©todos sobreescritos normales, pasa lo contrario. El subtipo tiene que
+3) En los métodos sobreescritos normales, pasa lo contrario. El subtipo tiene que
    declarar las CHECKED exceptions del padre o subtipos
    
    
-    class A{ Â Â Â Â 
-   		public A() throws IOException{ }Â Â  Â Â Â Â 
-   		void m() throws IOException{ } Â Â 
-   	}  Â Â 
-   	class B extends A{ Â Â Â Â 
+    class A{ 
+   		public A() throws IOException{ } 
+   		void m() throws IOException{ } 
+   	} 
+   	class B extends A{
    	
-   		//IOException OK, but FileNotFoundException is invalid Â Â Â Â 
-   	  	public B() throws IOException{ }  Â Â Â Â 
+   		//IOException OK, but FileNotFoundException is invalid 
+   	  	public B() throws IOException{ }  
    	
-   		//FileNotFoundException OK, but Exception is invalid Â Â Â Â 
+   		//FileNotFoundException OK, but Exception is invalid  
    		void m() throws FileNotFoundException{ } 
    	}
+   	
+4) No es necesario sobreescribir nada para crear tu propia Exception
+   basta con heredar de java.lang.Exception

@@ -2,9 +2,14 @@
 //PATH NIO
 
 1) Path.subpath te da las rutas limpias sin c:\\ ni \ finales 
-   sÃ³lo intermedias pej: f\salida 
+   sólo intermedias pej: f\salida 
    
-2) Path.resolve(string) te devuelve la ruta completa donde estÃ¡ ese fichero,
+    
+   Path p1 = Paths.get("c:\\a\\b\\c");
+   p1.subpath(1,2) --> b     
+   p1.getName(1) --> b
+   
+2) Path.resolve(string) te devuelve la ruta completa donde está ese fichero,
    precedido con \ruta\string.pdf
 
 3) Path.releativize (p) te da una ruta relativa desde la cual se representa p
@@ -12,7 +17,7 @@
    
    primero la ruta normaliza y luego se relativiza
    
-   ambas (Path y p) deben tener // c:// en su definiciÃ³n para que funciones
+   ambas (Path y p) deben tener // c:// en su definición para que funciones
    
    Path p1 = Paths.get("photos/goa");         
    Path p2 = Paths.get("/index.html");         
@@ -21,13 +26,13 @@
    
 4) Path p  = Paths.get("c:\\temp\\out"); 
    Files.deleteIfExists(p); --devuelve 
-   true si pudo borrarlo por que era un directorio que existÃ­a  y estaba vacÃ­o
-   false si no existÃ­a
-   DirectoryNotEmptyException si existÃ­a pero estaba vacÃ­o
+   true si pudo borrarlo por que era un directorio que existía  y estaba vacío
+   false si no existía
+   DirectoryNotEmptyException si existía pero estaba vacío
    
 5)Files.copy (path1, path2, StandardCopyOption.COPY_ATTRIBUTES)
 StandardCopyOption.COPY_ATTRIBUTES
-	intenta copiar como mÃ­nimo la hora de Ãºltima modificaciÃ³n, 
+	intenta copiar como mínimo la hora de Ãºltima modificación, 
 	pero no es seguro pues depende de quÃ© plataforma (SO) y quÃ© atributos 
 	de cada fichero maneja
 	
@@ -41,8 +46,63 @@ StandardCopyOption.COPY_ATTRIBUTES
 	el 2Âº param es el modo de acceso, que puede ser
 	
 	
-	"r" --> sÃ³lo para leer. al intentar escribir petarÃ­a 
+	"r" --> sólo para leer. al intentar escribir petaría 
 	"rw" --> modo lectura escritura. si no existe, lo intenta crear
 	"rwd" --> se modifica sincronamente (el fichero real - underliying)
-	"rws" --> se modifica sÃ­ncronamente hasta los metadatos
+	"rws" --> se modifica síncronamente hasta los metadatos
 	
+7) Paths.get sí existe
+   Path.get NO!!!
+   
+8) Paths.get("c:\\main\\project\\Starter.java").getname(0) --> main
+el prefijo raiz no  es parte del path name 
+
+9) path1.resolve(p2) si p2 es ruta absoluta, te devuelve el mismo p2
+
+10) path.toRealPath() tira una IOException si no existe... hay que gestionarla CHECKED
+
+//SERIALIZACIÓN 
+
+1) Si una clase implementa Seriailzable y detalla estos métodos
+son los que se tienen en cuenta al realizar la operación
+
+
+ private void writeObject(java.io.ObjectOutputStream out)
+     throws IOException
+ private void readObject(java.io.ObjectInputStream in)
+     throws IOException, ClassNotFoundException;
+     
+// RandomAccessFile
+
+
+1) RandomAccessFile raf = new RandomAccessFile("file.txt", "rw");--abro en modo lectura escritura
+--"r", "rw", "rws" (metadato y datos sycn), o "rwd (datos sync)" son las opciones válidas
+ 
+raf.seek( raf.length() ); --me pongo al final
+raf.writeChars("FINAL TEXT");--escribo
+
+2) RandomAccesFile crea un fichero y añade
+   FileOutputStream sobreescribe todo
+
+// FILE
+
+new File (File parent, String child) 
+new File (Uri parent)
+new File (String parent, String child)
+new File (String path)
+	
+//FILES
+
+//te devuelve un path con todos los archivos que tienen extensión gif y jpeg
+try{ DirectoryStream<Path> ds = Files.newDirectoryStream(dir, "*.{gif,jpeg}");
+
+//BUFFEREDREADER 
+
+BufferedReader(Reader) que puede ser un mismo BF, ya que es un Reader :)
+
+BufferedReader().lines():Stream<String> existe desde java 1.8
+
+
+//writeUTF
+
+Es un método de DataOutput, heredado por RandomAccesFile y ObjectOutputStream

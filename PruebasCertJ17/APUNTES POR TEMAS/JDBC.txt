@@ -17,3 +17,13 @@
 	de Interger a int
 
 		
+// TYPES
+
+1)	Types.STRING no existe
+	Types.VARCHAR sí
+	
+	
+//RESULTSET
+
+tienes el método ResultSet.inserRow, lo que inserta el registro en curso si la consulta se hizoç
+con UPDATABLE

@@ -1,5 +1,18 @@
 //HERENCIA
 
+-3) Si una clase implementa de 2 interfaces Java's support for multiple inheritance of type.
+
+-2) Una clase, si redefine un atributo que hereda, lo oculta. No lo sobreescribe.
+    Depende el tipo de referencia usado se da con una u otra. 
+
+-1) La Herencia multiple, teoricamente, no está sopoertada en JAVA
+
+aunque lo estu0viera, se pueden heredar atributos de objetos en diferentes
+estados, pero no métodos de instancia de múlitples casos
+no existen asociados a estados!
+
+0) Los métodos constructores no se heredan
+
 1) Override no es obligatorio. Pero si no está, el método puede sigfnicar
     una sobreescritura o una sobrecarga
     
@@ -22,7 +35,7 @@
    
 
 	
-4) Un método heredado está correctamente sobreescrito si:
+4) SOBREESCRITURA Un método heredado está correctamente sobreescrito si:
 
 	4.1 Mismo nombre y parámetros (en tipo y número)
 	    Es decir, misma CABECERA que el padre
@@ -35,7 +48,7 @@
 	   NOTA: La sobreescritura puede provocar desbordamiento de pila.
 	   OJo como se invoca
 	   
-	4.2 El tipo devuelto en el hijo es igual o más accesible que en el padre
+	4.2 La visibilidad en el hijo es igual o más accesible que en el padre
 	
 		public > protecteted > default > private
 		
@@ -43,7 +56,7 @@
 		el hijo no es consciente de lo que tiene el padre.
 		
 	4.3 El hijo no puede crear una checked excepción nueva o más genérica
-	    que el padre (sí más específica)
+	    que el padre (sí más específica) o ninguna
 	    
 	4.4 Covarizana en el tipo devuelto. El hijo puede devolver el mismo
 	    o un subtipo del tipo devuelto por el padre.
@@ -57,7 +70,7 @@
 	4.5 Un método estático no se sobreescribe. 
 	
 		 - Se oculta (se llama al hijo): si además de cumplir las normas anteriores
-		 es también statico
+		 es también static
 		 
 		 - Da fallo de compilación si el hijo o el padre no lo declara static
 		 y el otro sí.
@@ -80,13 +93,12 @@
 	    	c.tienePelo = false;
 	
 	
-	4.6 Métodos final no puedes sobreescribirse    
+	4.6 Métodos final no pueden sobreescribirse    
 
 	4.7 @Override es opcional - aunque ayuda a que el compilador te avise de fallos-
 	
 	
-	
-	4.2 Si se cumple 4.1, y además: 
+	4.8 Si se cumple 4.1, y además: 
 	
 		Los genéricos: si el padre tiene genéricos
 		el hijo puede NO tenerlos. 
@@ -95,25 +107,32 @@
 		
 		Si el padre tiene, el hijo debe tener los mismos exactamente
 		
-	4.3 En los tipos devueltos: covarianza
+	4.9 En los tipos devueltos: covarianza
 		Tanto del Tipo de Clase
 		Como del Tipo Combinado con el genérico
+		
 		ArrayList<CharSequence> es un subtipo (es covariante) a List<? extends CharSequence>
 		pero 
+		
 		ArrayList<? extends Integer> no es un subtipo de ArrayList<Number>
-
-5) Un método se sobrecarga correctamente si:
+		
+	4.10 Si el padre usa Genérico, el HIJO no puede usar concreto
 	
-	5.1 Tiene el mismo nombre y DISTINTO número o tipo de parámetros
-		o distinto modificador de acceso o static o diferente tipo devuelto
-		o diferentes excepciones
+	4.11 Si el padre usa Genérico Concreto, el HIJO no puede usar Genérico 
+
+5) SOBRECARGA Un método se sobrecarga correctamente si:
+	
+	5.1 Tiene el mismo nombre y  
+		DISTINTO número o tipo de parámetros
+		o DISTINTO modificador de acceso o static o diferente tipo devuelto
+		o DISTINTAS excepciones
 		
 		DISTINTA CABECERA/ SIGNATURA
 	
 		5.1.2 Si sólo cambia el tipo devuelto (en la misma clase), no es una
-	    sobrecgarga válida
+	    sobrecgarga válida - da error de compilación -
 	    
-	    5.1.3 Si solo cambia uno con y otro sin static, no es válida
+	    5.1.3 Si solo cambia uno con static y otro sin static, no es válida
 	
 		
 	5.2 Devuelve el mismo tipo exactamente en la misma clase (sin admitir covarianza)
@@ -121,23 +140,29 @@
 	5.3 Si se sobrecarga en una clase que hereda, puede haber covarianza en el tipo 
 		devuelto Siendo siempre la clase padre el supertipo
 	
-	"LA CABECERA es el NOMBRE + PARÁMETROS (no el tipo devuelto) - ESTRICTAMENTE HABLANDO-
+	
 	
 6) Si el método está sobrecargado en la misma clase, Java decide a quién llamar
-   basándose en los parámetros y su tipo. Si hay dudas, también decide
-   Normalmente va al más específico. Si no, prueba con otro.
+   basándose en los parámetros y su tipo. Si hay dudas, va al más específico. 
    
-   1 fly (String) 2 fly (Object)
+    fly (String)(1)  fly (Object)(2)
    
-   		fly ("hola") llama a 1
-   		fly (56) llama a 2
+   		fly ("hola") llama a (1)
+   		fly (56) llama a (2)
    		
     glide (1, 2)
-    	concordaría de menor a mayor con
+    	concordaría de menor a mayor llamaría a
     		glide (int, int);
     		glide (long, long);
     		glide (Integer, Integer);
     		glide (int ... nums);
+    		
+    		
+    		
+    6.1 POR DEFECTO hola (int i)
+    			    hola (short i)
+    			    
+    			    hola(1) --> llama a int! pq es int por defecto
 
 7) NO puedo tener el método sobrecargado con la misma firma cabecera signatura
    solo cambiando el tipo devuelto, en una misma clase
@@ -151,7 +176,31 @@
    el método que hereda no puede reducir la visiblidad
    pero sí ampliarla	
     
-   public > protecteted > default > private			
+   public > protecteted > default > private		
+   
+9) Si una clase 
+
+ public class TestClass{    
+ public static void main(String args[ ] ){       
+ A o1 = new C( );       
+ B o2 = (B) o1;       
+ System.out.println(o1.m1( ) ); --> 30 aquí sí se hacer el poliformismo       
+ System.out.println(o2.i ); --> 20 aquí usa el atributo del tipo referencia B    
+ } } 
+ 
+ class A { int i = 10;  int m1( ) { return i; } }
+ class B extends A { int i = 20;  int m1() { return i; } }
+ class C extends B { int i = 30;  int m1() { return i; } } 
+ 
+10) Si una clase hereda, el tipo devuelto puede ser menos restrictivo que el 
+    del padre, pero no más.
+    
+11) Una clase puede ser declarada abstract aunque no tenga ningún método abstract
+    Pero si tiene algún método abstract, obligatoriamente debe ser abstract
+
+12) Si heredo un método debo definir la visibilidad public o la que tenga
+
+
 ----------------------------
 ----------------------------
 
@@ -160,7 +209,9 @@
 1) Si una Interfaz declara un atributo, es públic static y final por defecto,
 aunque no lo ponga, y por tanto no puede sobrrescribirse
 
-2) Una clase no puede heredar el mismo método (cabecera) de dos interfaces distintas
+	1.1) Y SIEMPRE debe darle un valor inicial!"" explícitamente
+
+2) Una clase no puede heredar el mismo método (cabecera) de dos interfaces distintas sin implementarlo
 
 3) Una interfaz puede definir métodos estáticos con una implementación dada
 
@@ -175,13 +226,13 @@ aunque no lo ponga, y por tanto no puede sobrrescribirse
 QUE SEA IMPLÍCITO DICE QUE SI NO PONES NADA, EL COMPILADOR LO PONE. 
 -O PONE LO QUE LE FALTA-.
 
-PERO PEJ LOS MÉTODOS DE UNA INTERFAZ PUEDEN SER PRIVADO (NO TE PONE PUBLIC)
-AUNQUE NO PROTECTECT
+PERO PEJ LOS MÉTODOS DE UNA INTERFAZ PUEDEN SER PRIVADO - A partir de java 9- 
+PERO NO PROTECTED
 
-SÓLO public, default y private (x static)
+los métodos SÓLO public, default y private (x static)
 Puede haber métodos de una interfaz:
 
-8.1 modificadores permitodos en los métodos de una una IFAZ
+8.1 modificadores permitidos en los métodos de una una IFAZ
 	
 	private
 	private static
@@ -211,7 +262,7 @@ Puede haber métodos de una interfaz:
    12.2.1 Las variables instancia nunca se sobreescriben. Se ocultan -redefiniendose
    o se sombrean (shadowed) por variables locales o métodos
         
-   12.3 Si un IFAZ declara un método default y está implmentado en alguna
+   12.3 Si un IFAZ declara un método default y está implementado en alguna
         subclase, se ejecuta el de la subclase POLIMORFISMO
         
 13) Default métodos Java 8 en interfaces:
@@ -240,14 +291,45 @@ Puede haber métodos de una interfaz:
     
 16) Si una clase hereda y redefine el método cambiando el tipo a los parámetros
     no es sobrescritura, es sobrecarga
-    
-17) Si una clase hereda, el tipo devuelto puede ser menos restrictivo que el 
-    del padre, pero no más.
-    
- 18) super.super no puedes acceder. No existe
+     
+17) super.super no puedes acceder. No existe
  
  	Pero si implementas una IFAZ con defautl, lo sobreescribes y quieres
- 	referirte al Padre puedes con IFAZ.super.metodo() desde el hijo     
+ 	referirte al Padre puedes con IFAZ.super.metodo() desde el hijo    
+ 	
+ 
+18) Una interfaz que hereda de otra, puede redeclarar un método por defecto
+ 
+19) Una interfaz que hereda de otra, no puede hacer un método privado que redeclare uno público 
+     heradado 
+     
+20) Un método no puede ser static y abstract a la vez
+
+21) no puedes referirte a un método de una interfaz desde una clase que la implementa con super
+
+interface A 
+{    default void hello() {    } 
+}  
+interface B extends A 
+{    default void hello() 
+{        
+super.hello();    //This is NOT valid.        
+A.super.hello();    //This is valid.    
+} 
+}
+
+No puede llamar desde una interfaz a otra padre con super.método... siemre 
+----------------------------------------------
+----------------------------------------------
+
+VISIBILIDAD protected métodos
+
+1) si un método es protected, puede accderse por una instancia hija o desde el mismo paquete
+    por la propia instancia (misma referencia) desde otro paquete, NO
+    
+    si es package protected, sólo desde el mismo paquete siendo una subclase
+    Y NO desde fuera del paquete . Más restrictivo
+
  -------------------------------
  -------------------------------
  
@@ -277,6 +359,12 @@ Puede haber métodos de una interfaz:
 10) Si tienes una clase que hereda un método estático
     y sobreescribe (implmenta) una IFAz con el mismo método, 
     da conclifto: no sabe si tirarse para el static o el dinamyc
+    
+11) También sería ambigüo tener una clase abstracta que sobrrescribe con los 
+    mismos parámetros y nombre
+   
+12) No puede instanciarse una clase declarada como abstracta. 
+    No se puede llamar a new ClaseAbstracta()
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 

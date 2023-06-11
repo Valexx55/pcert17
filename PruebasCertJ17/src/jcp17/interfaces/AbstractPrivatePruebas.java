@@ -9,9 +9,11 @@ abstract public class AbstractPrivatePruebas {
 	}
 
 	interface Dance {
-		default void permform() {
+		protected default void permform() {
 			System.out.println("Hola DANCE");
 		}
+		
+		int nada ();
 	}
 
 	static class Pinguino implements Swim, Dance {
@@ -20,9 +22,13 @@ abstract public class AbstractPrivatePruebas {
 		
 		private void muestra ()
 		{
+			//super.permform();
 			Swim.super.permform();
+			Dance.super.permform();
 		}
 		
+		@Override
+		public int nada () {return 0;}
 
 		public static void main(String[] args) {
 			new AbstractPrivatePruebas.Pinguino().muestra();

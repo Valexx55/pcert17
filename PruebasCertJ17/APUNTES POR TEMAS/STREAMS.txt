@@ -83,6 +83,7 @@
     determinar su decisión.
     
 12) 
+	reduce con 1 parámetro devuelve Optional, con el resto valor
     reduce(BinaryOperator<T> accumulator) : devuelve un OPTIONAL DE T
     reduce(T identity, BinaryOperator<T> accumulator) devuelve un T
 
@@ -92,8 +93,8 @@
     List<String> letters = Arrays.asList("j", "a", "v","a");
     System.out.println(word); // {=[j, a, v, a]}
     
-15) UN INTERFAZ FUNCIONAL --> sÓLO UN MÉTODO ABSTRACTO (SIN IMPLEMTANAR)
-	+ VARIOS STATIC O DEFAULT CON IMPLENTACIÓN
+15) UN INTERFAZ FUNCIONAL --> sÃ“LO UN MÃ‰TODO ABSTRACTO (SIN IMPLEMTANAR)
+	+ VARIOS STATIC O DEFAULT CON IMPLENTACIÃ“N
 	
 
 	A functional interface in Java is an interface that contains only a single abstract (unimplemented)
@@ -103,3 +104,76 @@
 	implementation, in addition to the single unimplemented method.
 	
 16) max(Comparador)!!! para que funciones bien
+
+17) groupingBy( Function 1 paramétro / clasificador, collector)
+String::equals No vale 2
+String::upperCase sí valdría es 1
+
+18) anyMatch devuevell un boolean!!!!!
+
+19) Function<ENTRADA, SALIDA> lleva 2 parámetros"!!"" genéricos
+
+20) sea este método local 
+
+public void remove(List˂Character˃ chars) {
+   char end = 'z';
+   Predicate˂Character˃ predicate = c -˃ {
+      char start = 'a'; return start ˂= c && c ˂= end; };
+
+   // INSERT LINE HERE
+   char c = x; ---------> FUNCIONA!!! PQ c, tiene sólo el ámbito de la lambda
+}
+
+21)
+
+Employee e = new Employee(); //2        
+System.out.println(validateEmployee(e, e->e.age<10000)); //3
+
+fallo, la e de parámetro no puede llamarse e, porque redeclara a e de Emplooyee en la línea antes
+las lambas no tienen ámbito propio...
+
+22) 
+
+Stream<String> ss = Stream.of("a", "b", "c", "d", "e");     
+Spliterator<String> sit1 = ss.spliterator();     
+long s0 = sit1.estimateSize();     
+Spliterator<String> sit2 = sit1.trySplit();     
+long s1 = sit1.estimateSize();     
+long s2 = sit2.estimateSize();          
+System.out.println( s0 - (s1+s2) ); -- al saber el número exacto de elemtentos esto da cero
+
+//STREAM INT
+
+1) average devuelve un Optional<Double>
+   sum devuelve un int!!
+   
+2) 
+
+System.out.println(ls.stream().max(Integer::max).get()); //2 NO FUNCIONA Integer max no funciona ccomo comparador  
+System.out.println(ls.stream().max(Integer::compare).get()); //3 Este sí
+
+max (espera un COMPARADOR) para que la cosa funcione bien
+   
+3) IntStream.collect NO existe
+
+4) mapToObj... y pasa a Stream<O>    
+
+5) IntStream.reduce (f): OptionalInt
+
+	5.1) IntStream.reduce (v, f1): int
+	
+6) IntStream.rangeClosed(1,4)--> te da del 1 al 4 incluido
+
+7 ) Collectors.joining() ESPERA Stream˂String˃
+
+8) Stream.iterate(1, x -˃ x++) devuelve 1111111 infinito
+
+8.1) Stream.iterate(1, x -˃ ++x) devuelve 1234567 infinito
+
+9) COllectors.MAP (1K, 2V) --> NO ADMITE CLAVES DUPLICADAS --< LANZA EXception
+   COllectors.MAP (1K, 2V, 3MERGE) --> sí ADMITE CLAVES DUPLICADAS
+
+10) Collections.reduce (U, BF<U, I, U>, BC<U>) la función del emdio rx tipos distintos
+
+
+11) Collector.groupingBy(Null) --> da NullPointerException
