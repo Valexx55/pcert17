@@ -122,8 +122,31 @@ y f podría ser cualquier tipo que tenga Hora (LocalDate no)
 Instant ins = Instant.now(); 
 System.out.println(ins)
 
+8) 
+
+LocalDate date = LocalDate.parse("2022-04-30", DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+System.out.println(date.getYear() + " " + date.getMonth() + " "+ date.getDayOfMonth());
+
+//FALLA porque el formateo pide horas y la fecha LocalDate no tiene TIME!
+
+9) 
+
+
+Period p = Period.between( LocalDate.now(), LocalDate.of(2022, Month.SEPTEMBER, 1));
+System.out.println(p);
+Duration d = Duration.between(LocalDate.now(), LocalDate.of(2022, Month.SEPTEMBER, 1));
+System.out.println(d); 
+
+//Excepción porque Duration requiere de Time y LocalDate no aporta el tiempo
+
+Extra: beteween (inicio: Temporal, final: Temporal - SUPERTIPO-) : NEGATIVO si inicio > final
+																 : POSITIVO si inicio < final	 
+
+
 //HORARIO INVIERNO VERANO
 
+
+1)
 		var date = LocalDate.of(2022, Month.NOVEMBER, 6);
 		var time = LocalTime.of(1, 30);
 		var zone = ZoneId.of("US/Eastern");
@@ -140,11 +163,25 @@ System.out.println(ins)
 		
 		marzo --> más una hora
 		noviembre --> menos una hora
-// TIME Y DATE
+		
+		
+2)
 
-1) FALLA porque el formateo pide horas y la fecha LocalDate no tiene TIME!
+	LocalDateTime ld1 = LocalDateTime.of(2022, Month.NOVEMBER, 6, 2, 0); 
+	ZonedDateTime zd1 = ZonedDateTime.of(ld1, ZoneId.of("US/Eastern")); 
+	LocalDateTime ld2 = LocalDateTime.of(2022, Month.NOVEMBER, 6, 1, 0); 
+	ZonedDateTime zd2 = ZonedDateTime.of(ld2, ZoneId.of("US/Eastern")); 
+	long x = ChronoUnit.HOURS.between(zd1, zd2); System.out.println(x);
+	
+	
+	da -2! porque between tiene en cuenta el desgase horario con la hora localizada
+	y es justo el cambio de tiempo. 
+	
+	luego de una a 2, habría una hora noramleten -1
+	pero como ya son las 2, es una hora más (serían las 3)
 
-LocalDate date = LocalDate.parse("2022-04-30", 
-   DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-System.out.println(date.getYear() + " " 
-   + date.getMonth() + " "+ date.getDayOfMonth());
+	
+3) si sumas Duration sumas horas, lo que tienen en cuenta el cambio horario invierno/verano
+   si sumas Periods sumas días, lo que ignora el factor horas verano/invierno
+   
+4) ISO dateTiemForamter 02/05/2022 de una LocalDate	

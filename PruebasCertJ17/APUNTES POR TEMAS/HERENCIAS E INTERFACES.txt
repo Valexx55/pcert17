@@ -7,6 +7,8 @@
 
 -1) La Herencia multiple, teoricamente, no está sopoertada en JAVA
 
+
+
 aunque lo estu0viera, se pueden heredar atributos de objetos en diferentes
 estados, pero no métodos de instancia de múlitples casos
 no existen asociados a estados!
@@ -119,6 +121,9 @@ no existen asociados a estados!
 	4.10 Si el padre usa Genérico, el HIJO no puede usar concreto
 	
 	4.11 Si el padre usa Genérico Concreto, el HIJO no puede usar Genérico 
+	
+	4.12 Si un método es estático, no puede sobreescribirse por uno no estático
+	     y viceversa. Si está definido como dinámico, no puede sobreescribirse como estático
 
 5) SOBRECARGA Un método se sobrecarga correctamente si:
 	

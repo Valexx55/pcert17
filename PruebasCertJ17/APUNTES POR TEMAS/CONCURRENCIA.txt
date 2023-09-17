@@ -16,8 +16,7 @@
 4) AtomicInteger tiene métodos para añadir uno atómicamente (operación copn estado frente a hilos)
 	Por ejemplo, para sumar de a uno
    		
-   			- AtomicInteger.addAndGet(1);
-   			- AtomicInteger.incrementAndGet();
+   			- AtomicInteger.addAndGet(1)   			- AtomicInteger.incrementAndGet();
    			
 5) Si un método es sync y acaba con una checked exception, 
    el bloqueo es gestioando por el hilo y liberado automáticamente
@@ -48,8 +47,13 @@
 
 //THREAD
 
-th.start() --< NOS SE PUEDE LLAMAR 2 VECES A START con el MISMO HILO
+1) th.start() --< NOS SE PUEDE LLAMAR 2 VECES A START con el MISMO HILO
+
+2) Thread hilo =  ...
+   hilo.interrupt() sólo marca el hilo como interrupmdio
+   no salta una la expceción de InterruptedException si el hilo no está en espera o(sleep o wait)
 
 //LOCK
 trylock devuelve booleano y si pudo bloquear, bloquea
 cada lock/trylock debe llevar su unlock...si no se bloquean 2 y nunca se desbloquea
+

@@ -134,13 +134,24 @@ las lambas no tienen ámbito propio...
 
 22) 
 
-Stream<String> ss = Stream.of("a", "b", "c", "d", "e");     
-Spliterator<String> sit1 = ss.spliterator();     
-long s0 = sit1.estimateSize();     
-Spliterator<String> sit2 = sit1.trySplit();     
-long s1 = sit1.estimateSize();     
-long s2 = sit2.estimateSize();          
-System.out.println( s0 - (s1+s2) ); -- al saber el número exacto de elemtentos esto da cero
+	Stream<String> ss = Stream.of("a", "b", "c", "d", "e");     
+	Spliterator<String> sit1 = ss.spliterator();     
+	long s0 = sit1.estimateSize();     
+	Spliterator<String> sit2 = sit1.trySplit();     
+	long s1 = sit1.estimateSize();     
+	long s2 = sit2.estimateSize();          
+	System.out.println( s0 - (s1+s2) ); -- al saber el número exacto de elemtentos esto da cero
+
+23) 
+
+Comparator<T> c = Comparator.comparing(Function<T, U)>) donde T es el lo que se compara y U un Comparable
+
+List<Integer> ls = Arrays.asList(10, 47, 33, 23);
+ls.stream().max(Comparator.comparing(a->a)).get();
+
+Da 47
+
+
 
 //STREAM INT
 

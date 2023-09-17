@@ -1,0 +1,455 @@
+//COLECCIONES
+
+* MAP NO es una Collection
+
+* List.get(index) si no existe index, da excepción NO devuelve null
+
+* List.set (posicion, valor) reempzar el valor en la posición si lo hay tira Exception si no E posición
+
+* List.copyOf 
+  List.of 
+  
+  Crean nuevas listas
+  Métodos factoría que no admiten NULL ni listas con algún NULL
+  Listas NO modificables en estructura (ni borrar ni añadir)
+  Pero sí en el Estado de sus elementos
+  
+* Arrays.asList
+
+  Crea una lista a partir de un Array
+  La lista apunta a las mismas posiciones (bridging /backed view)
+  Listas NO modificables en estructura/tamaño (ni borrar ni añadir)
+  Pero sí en el Estado de sus elementos
+
+* Collections.unmodifiableList
+
+  Crea una lista 
+  La lista apunta a las mismas posiciones (bridging /backed view)
+  Lista NO modificables en estructura/tamaño ni en Estado
+  
+* List.sublist [pos, fin)
+
+  Crea una lista 
+  La lista apunta a las mismas posiciones (bridging /backed view)
+  Listas Modificables en estructura/tamaño Y Estado de sus ítems
+ 
+* Deque es FIFO
+
+  Deque<Integer> d = new ArrayDeque<>();
+  d.add(1);
+  d.add(2);
+  d.addFirst(3); //con add añade por el final, encola. con push por el principio
+	
+  System.out.println(d.pollLast());// 2
+  System.out.println(d.pollLast());// 1
+  System.out.println(d.pollLast());// 3
+	
+* Existen NavigableMap y NavigableSet : van con ORDEN NATURAL
+  
+* NavigableSet herea de SortedSet
+  
+* Map.put (K,V) : S
+				  donde S es
+				  - el valor previo asociado a esa K
+				  - null, si la K no existía o estaba asociada a un valor null
+				  
+* Esto da fallo
+
+	List list = new ArrayList();         
+	list.add("val1"); //1         
+	list.add(2, "val2"); //2 <------ en la línea 2 porque no existe la posición 2 donde se va a insertar aún         
+	
+* Collection.add (T): boolean - true si pudo añadir/modificar la colección
+
+* LinkedList == ArrayList mantiene el orden de inserción (inserta por el final)
+
+* Collections.sort(Arrays.asList(1, 2, 3, 4), null) NO DA FALLO !!!
+  Daría fallo si los elementos del array no son comparables entre si (en ejecución)
+  
+  Collections.sort(Arrays.asList('1', 2, 3, 4), null); --> ClassCastException No son comprables entre ellos 
+	
+*  Queue <Integer> q = new LinkedList<>();
+   q.add(10);
+   q.add(12);
+   q.remove(1);
+   System.out.print(q); --> Imprime [10, 12]
+   
+   Queue.remove no está sobreescrito, luego toma la implementación de Collection (object)
+   que borra el elemento que sea igual al pasado
+   
+   ((List<Integer>)q).remove(1);	  
+   System.out.print(q); --> Imprimiría [10] porque remove en List borra por posición!
+   
+*  Queue <Integer> q = new ArrayList<>() NO VA!!
+	 
+   LinkedList implementa esta interfaz!!! (ArrayList no lo hace)
+   hace FIFO con remove() - elimina por el principio-
+   
+   ArrayList Implementa RandomAccess y Hereda de AbstractList
+   no tiene remove()
+   
+* ArrayList<Integer> q1 = new ArrayList<>();
+  q1.add(10);
+  q1.add(12);
+  q1.remove(10); --> EXECEPCIÓN pq existe remove (int) y remove (Object) y se va antes al int y la pos 10
+  					 no existe
+  System.out.print(q1);   
+  
+* TreeSet<Q> NO admite nullos
+  ts.add(null); --> Peta en ejecución, porque por dentro usa el comparador del objeto 
+  				    para insertar ordenado
+  				    
+* TreeMap<K, V> NO admite insertar K null
+  ts.put(null, X); --> Peta en ejecución, porque por dentro usa el comparador del objeto Klave
+  				       para insertar ordenado// X podría ser nulo
+      
+* NavigableSet.subSet[linferior, lsuperior).add(valor fuera del rango ordenado de esos límtes);--> PETA
+ 
+ pej
+  ns.subSet("a", "dz").add("j"); --> FALLO! Clave fuera del rango- IllegalArgumentException
+  ns.subSet("a", "c").add("b"); --> FUNCIONA!
+  
+  ns.subSet(1, 3).add(4); --> FALLO
+  ns.subSet(1, 3).add(3); --> FALLO
+  ns.subSet(1, 3).add(2); --> FUNCIONA!!!
+
+
+//CONCURRENCIA
+
+* ReadWriteLock loc.readlock.lock() loc.readlock.unlock()
+
+* Callable<V>  Interfaz 
+	V call () throws Exception
+
+* new Thread(() -> {w1.write(d1, d2);}).start(); //válido --> lanza el método run
+
+* DEALOCK: dos procesos usan recursos que se bloquean mutuamente sin hacer nada
+  LIVELOCK : igual, pero los dos procesos van cambiando de estado (analogía pasillo estrecho)
+  STARVATION : un proceso espera que sea él el asignado, pero nunca le toca (a los otro sí)
+
+//EXCEPCIONES
+
+* Exception tiene 5 constructores con parámetros como:
+  Mensaje, Throwable y boolean
+  
+* java.nio.file.NoSuchFileException Existe :) !
+
+
+      
+// GENÉRICOS
+
+*	Evitas Castings
+	Asegura compatiblidad en tiempo de Compilación
+	Uso eficiente memoria
+	Expresar relaciones entre tipos de parámetros de entrada y salida
+	
+*  List<? extends Number> -- Lista de Numbers upper bound
+   List<? super Number> --  Lista de Numbers o superTipo lower bound
+   
+*  ArrayList<Number> SUBTIPO de List<? super Integer>
+
+*  List<? super Number> SUBTIPO de List<? super Integer>
+
+*  List<Integer> NO es una List<Object> -- lista de Objetos
+   List<Integer> SÍ es una List <? extends Number>
+   List<Integer> SÍ es una List <?> -- lista de cualquier cosa
+   List<Integer> NO es una List <? super Number>
+   
+*  Operador diamante (desde J7): dejas que el compilador infiera el tipo de instancia sin
+   tener que poner new Box<Integer>();
+   
+   Box<Integer> integerBox = new Box<>(); 
+  
+*  Ej declaración uso genéricos en un método
+   
+   <T, S> T funcion (Collection<S>)
+   
+* La info de genéricos <T> si quita al compilar. 
+  Todos se traducen a su tipo frontera upper bound o a Object
+  
+* super no se puede usar para limitar tipos 
+  
+  public <T super String> Collection<T> transform(List<String> list) . ILLEGAL
+  
+  super sólo se puede combinar con ? WildCars 
+  
+  pej: 
+  		List<? super Integer> lenteros = new ArrayList<>();
+  
+  Esto pasa porque T al final se traduciría a Object, y hace que el tipo frontera sea inútil en la práctica.
+  
+  NOTA: Intermanete en Java el Polfimorfismo está controlado/funciona, de arriba a abajo. 
+  De clases padre a clases hija.
+
+* en una lista 
+	
+	List<? super Number> lnumeros = new ArrayList<>();
+	
+	lnumeros.add(T) T tiene que se un Number o subtipo de Number
+	
+	no confundir el método add con el genérico que sirve para pasar parámetros y supertipos
+	
+* List <? extends String> --> Todo lo que hay dentro es un String 
+							 (todos de un mismo tipo igual o heredando de Spring)
+							 
+							 No se puede hacer add, porque no sabes de que tipo concreto son
+							 eso sí, sí puedes hacer get y sabrás que es un String lo que hay
+							 
+							 "consumidor"
+
+* List <? super String> --> Todo lo que hay dentro es un String o superior...
+                            
+                            cuando haces get, te da un Object
+                            
+                            y si haces add (String); //prueba en compilación
+                            
+                            "productor"		
+                            
+	al hacer válido que insertes un String aseguras compatiblidad
+	es una frontera baja.				 
+							 
+	
+* Type Erasure: provoca que los genéricos se vayan a traducir a su tipo frontera (Padre) super/extends
+  o a Object al compilarse
+  
+  //clases e interfaces se convierten a Object
+  public class Foo<T extend CharSequence, U> -->  public class Foo
+  
+   //tipos parametrizados se van a su frontera
+   public <V extends Number> V qux(V objParam) --> public Number qux(Number objParam)
+   
+   //wildCards --> A object
+   
+   //colecciones parametrizadas
+   List<T> --> A Object
+  
+* un Tipo es Refiable si en todo momento se sabe qué tipo es: primitivos, clases, arrays
+  No Refiable es cuando en ejecución, no se sabe que tipo es: ocurre con genéricos
+  a una List<T> no puedes usar el instanceof porque no sabes de qué equipo es
+  
+* Heap Pollution si tu usas List<T> y pasas elemntos T, bien, pero al quitarse
+  el tipo Type erasure, Java no puede controlar en ejecución qué las operaciones son 
+  son seguras (aplican al tipo que son operado) de ahí que a veces salgan warnings con tipos. 
+  que se pueden quitar con @SageVarArgs y @SupresWarnings 	
+  
+* No puedes instanciar genérticos con primitivos 
+	
+	Pair<int, char> p = new Pair<>(8, 'a'); --> Prohibido!
+	
+* No puedes crear instancias con genéricos new T(); siendo pej List<T>
+
+* No puedes declarar campos estáticos con tipos genéricos
+
+  --> distintas instancias tendrían un mismo campo con tipos distintos: IMPOSIBLE
+
+* No puedes hacer Castings o usar instaceof con tipos Parametrizados
+
+    prohibido		List<Integer> li = new ArrayList<>();
+    		    	List<Number>  ln = (List<Number>) li;  // compile-time error
+    		    
+    prohibido		List<?> list;
+	            	if (list instanceof ArrayList<?>)
+    		    
+* No puedes crear arrays de Tipos Parametrizados
+
+	prohibido 		List<Integer>[] arrayOfLists = new List<Integer>[2];
+	
+* No puedes crear o hacer cacth de objetos parametrizados
+
+	prohibido		catch (T e) {   // compile-time error
+	
+	prohibido		class MathException<T> extends Exception
+	
+* pero sí puedes lanzar una excepción de un tipo genérico / parametrizado
+
+	PERMITIDO 		public void parse(File file) throws T
+	
+* No puedes hacer sobrecarga de un método con los mismos tipo parametrizado. 
+  Son indisitinguibles al borrarse (type erasure)
+
+	prohibido		public void print(Set<String> strSet) { }
+    				public void print(Set<Integer> intSet) { }
+
+* Al instanciar una Interfaz Funcional; siempre mejor poner el tipo concreto al parametrizar
+  pej Predicate<Data> 
+  
+  Si no lo haces, se asume Object Predicate p = (Object o) -> return true}... y podría no funcionar siempre 
+	
+* 
+    public record Class<T>(T t) declara una clase con un genérico
+    
+       1) 
+       private <T> void  println(T message) //si defino un método dentro con la misma letra
+    									   // el genérico se oculta, con lo que el T de la clase es uno 
+    									   // y el T del método es otro
+    									   
+    			//genérico delante del tipo devuelto
+       2) 									   	 
+       private void  println(T message) //si lo dejo así, T de la clase y T del método 
+     							      //serían el mismo
+     							      
+     							      		   
+   	new Hello<String>(7) --> no funciona, pq estoy parametrizando T como String y paso un número
+	new Hello<String>("hola") --> OK
+	new Hello(7); --> T pasa a ser de tipo Object
+	new Hello<>(7); --> T pasa a ser Integer operador diamente infiere
+	
+	1) o 2) 
+	new Hello(4).<Integer>println("h"); --> Una vez que es de tipo Object Hello<Object> 
+									        Ignora el segundo tipo y/o admite cualquier cosa
+	1)								      
+	new Hello<String>("hola").<Float>println("j"); --> Falla pq espera parámetro Float, no String  								        
+									       
+
+* 
+	class MyGenericClass<T>
+	{     
+		  T t;     
+		  
+		  public <T> String transform(T p){  
+			this.t = p; // NO COMPILA porque T del método sobreescribe a T del atributo/Clase 
+			} 
+	} 									        
+									        
+* 		List<?> q = List.of("mouse", "parrot"); //<--Se instancia como List<Object> 
+		List<> q1 = List.of("mouse", "parrot"); //<--NO compila 
+		List q2 = List.<String>of("mouse", "parrot"); //<--Se instancia como List<Object>
+		
+		var v = List.of("mouse", "parrot");//<--Se instancia como List<String>.	
+	 
+
+
+// HERENCIA
+
+* Si un método padre usa genéricos en sus parametros p ej Set<Integer>
+  el hijo puede quitarlos Set
+  
+  Pero NO Al revés. Si el padre NO los tiene, el hijo no puede ponerlos
+
+//JAVA BÁSICO
+
+* Una variable o método puede emepzar por letra, dolar o guión bajo. Además puede tener números y longitud variable
+
+* Boxing es cuando un tipo primitivio se infiere/convierte automáticamente una clase
+  UnBoxing lo contrario. Java castea automáticamente
+
+//JAVA IO
+ 
+* Console.readPassword():char[] --> no imprime lo que clica el usuario, pero el array de chars es totalmente legible
+
+//JAVA OO
+
+* Un atributo dinámico que se redefine se sobreescribe, oculta al hereadado
+  Un método estatico que se redefine se sobreescribe, oculta al hereadado
+  Un método dinámico que se redefine se sobreescribe 
+
+* Package-Protected SIN modificador de acceso -> Sólo ref dentro del paquete!!
+
+* Una clase interna estática es consiedrada como una clase anidada top y no tiene
+  ninguna refrencia o relación con ninguna clase que la contenga  
+
+	public class Outer // NO COMPILA!!!!! 
+	{ 
+	    int x ; 
+	    static class Inner 
+	    { 
+	        void foo() 
+	        { 
+	            x = 5 ; 
+	        } 
+	    } 
+	} 
+
+* protected : paquete y subclases 
+  package protected : paquete y subclases del mismo paquete
+  
+  package-protected más restrictivo que protected!
+
+* NO es obligatorio que un archivo fuente tenga una clase pública
+
+//LINEA COMANDOS 
+
+
+*  Sean a.jar un named module y b.jar un jar no modular y a depende de b
+
+	jdeps -module-path lib\a.jar; -classpath lib\b.jar --> falta directorio, jar que analizar target
+    jdeps -cp lib\b.jar;lib\a.jar --> idem Falta target
+    jdeps -cp lib\b.jar lib\a.jar --> falla pq analizar a le lleva a B y desde modulepath no puedes ir a cp
+	jdeps --module-path lib\b.jar lib\a.jar --> funciona pq el análisis de a lleva a b a convertirse en 
+											    un módulo automático al estar en mp
+											    
+//OPTIONAL
+
+* Optional.of (null) --> tira Exception!!
+  Optional.ofNullable (null) --> CORRECTO!!
+											    
+//SECCIONES DE CÓDIGO, ÁMBITOS
+
+* do 
+	{
+	if (cc) continue;
+		i1; //i1 e i2 se ejecutan sií cc no se cumple 
+		i2; //si se cumple, hace saltar al continue hasta while
+	} while (cond)	
+	
+* Puedes definir una sección de código entre llaves ({}) sin ningún if/else asociado!
+   - y se ejecutará siempre -
+   
+*  CÓDIGO INALCANZABLE I
+
+	for (var value : arr) {
+			if (counter >= 5) {
+				break;
+			} else {
+				continue;
+			}
+			//////////////*****************CÓDIGO
+			if (value > 4) {
+				arr[counter] = value + 1;
+			}
+			counter++;
+			**/////////////////INALCANZABLE ERROR DE COMPILACIÓN
+		}
+   
+* CÓDIGO INALCANZABLE II
+
+	while (false) { x=3; } --> esto es ERROR de COMPILACIÓN
+
+	if (false) { x=3; } --> esto con IF compila, y es una excepción de la JSL
+	
+
+*  Pueden declararse dos variables con el mismo nombre en el mismo método de este modo:
+
+   void twoVars() {
+ 	 	{ int i = 0; }
+  		{ int i = 1; } // OK!!!
+	}
+
+* CÓDIGO FALLA variable duplicada
+
+	static void processBase(Base base)
+	{       
+		A a = null;       
+		if(base instanceof A a ) <--- AQUÍ....no puede darse a exisitendo ya a en ese ámbito
+		{ 
+
+
+* Ilegal NO Puedes mezlar declaraciones e inicializaciones. O una cosa u otra
+
+  int i ; for ( i = 4, int t = 6; i < 0; i++ ) --
+
+//STREAMS
+
+* MAP.forEach (BiConsumer <K, V>)
+
+//STRINGs
+
+* String.isBlank() == true si cadena vacía o sólo contiene blancos
+* String.isEmpty() == true sií length == 0
+
+//TEXT BLOCKS
+
+* si las """ comillas de cierre están en otra línea, se mete un intro \n
+
+
+

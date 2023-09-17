@@ -16,11 +16,25 @@ public class Bobys {
 		var bL = new ArrayList<Booby>(); 
 		var tL = new ArrayList<Tooby>();  
 		
-		List<? extends Booby> bV = null;
-		bV.add(new Booby(){ });
+		List<? extends Booby> bV = new ArrayList<Booby>();
 		
-		List<? super Dooby> dV = null;
-		dV.add(new Dooby(){ });
+		//var b = new Booby();
+		//Booby x = bV.get(0);
+		
+		/*bV.add((Booby)x);
+		
+		bV.add(new Bobys().new Booby());
+		bV.add(new Dooby(){ });
+		bV.add(b);*/
+		
+		List<? super Dooby> dV = new ArrayList<>();
+		//dV.add(new Dooby(){ });
+		//dV.add(new Tooby(){ });
+		//Dooby d = dV.get(0);
+		
+		Booby bb = new Bobys().new Juani();
+		
+		dV.add((Dooby)bb);
 		
 		
 //		List<? extends CharSequence> dS = new ArrayList<String>();
@@ -38,6 +52,8 @@ public class Bobys {
 		return new ArrayList<Dooby>();
 	}
 	
-	
+	public void <V extends Number> bar(V obj) {
+		   // method body...
+		}
 
 }

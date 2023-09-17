@@ -5,7 +5,9 @@
 2) Arrays.mismatch (array1, array2 ) devuelve -1 si los array que compara son iguales o el índice
 	del primer discordante
 	
-3) Arrays.compare (a1, a2, comaparador? ) : 1, -1 , 0
+3) Arrays.compare (a1, a2, comaparador? ) : diferencia entre primer discordante + ó -
+											0 si son iguales 	
+											o diferencia de tamaño  + o -
 
 	si son distintos (mismatch devuelve numero positivo)
 	y ese número de índice está presente en ambos, se devuelve lo que resulta de la compración
@@ -89,6 +91,8 @@ todo espacios blancos
 71) StringBuilder tiene
 	
 		ensureCapacity(n)
+		tb se pude poner la capcidad minima en el constructtor
+		StringBuilder (n)
 			
 8) Comparando 
 
@@ -105,8 +109,10 @@ todo espacios blancos
 9) Impriminedo con SYSOUT
 
   System.out.println(null + true); //1 -- NO COMPILA    
-  System.out.println(true + null); //2    
-  System.out.println(null + null); //3
+  System.out.println(true + null); //2 -- NO COMPILA    
+  System.out.println(null + null); //3 -- NO COMPILA 
+  
+  pq ninguno es string...
 		
 		
   String getString() { return null; }, println( getString() + true ) -- Esto funcionaría
@@ -410,6 +416,7 @@ class TreeClimber {
 	
 	Float.parseFloat("-Infinity") --> da valor  Float.NEGATIVE_INFINITY
 	Float.parseFloat("NaN") --> Float.NaN
+	System.out.println(Float.NEGATIVE_INFINITY); --> -Infinity
 	
 6) los float tiene precisión de 6 dígits
 	si pasas de int a float, se pierde precisión
@@ -605,6 +612,9 @@ public class Buddy {
 	NO Puedes hacer char = int -- piensa en el rango de int...pero si fuera constatne sí FINAL
 	pero sí int = char 
 		
+4) Integer.max (1, 3): 3 devuelve un número, el mayor
+	vs
+   Integer.compare(1, 2): -1 devuelve negativo, positivo o cero, actuando como un comparador
 
 //VIRTUAL CALL
 
@@ -660,7 +670,10 @@ no redefine equals, usa el de OBJECT :S
 
 sb.delete(0, sb.delete) --> vacía el método
 
-sb.insert(2, "x") insrta y desplaza
+sb.insert(2, "x") inserta y desplaza
+
+mete un telefono por delanta y al final el sufijo xxxx
+StringBuilder("xxxx").insert(0, fullPhoneNumber, 0, 8).toString();
 
 // NULL
 

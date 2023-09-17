@@ -121,7 +121,9 @@ apuntan a la lista de orginal (no son nuevas listas)
 	
 14) El TypeErasure provoca que los genéricos se vayan a traducir a su tipo
     frontera (padre) o a Object al compilarse.
-    
+
+PECS: StackOverFlow prefuntas    
+
     Aún así, en herencias y polimorfismo, puede pasar que el compilador genere
     funciones ficción, (bridge methods) para trabajar con Object en supertipos
     y evitar casques
@@ -202,7 +204,7 @@ apuntan a la lista de orginal (no son nuevas listas)
 21) Optional.of(null)--> tira una excepción!
 	Optional.ofNullable (valor) --> sería lo correcto si el valor puede ser null
 	
-22)
+22) Map.put (k, v) --> da null si esa clave no estaba asociada ningún valor o el valor anterior 
 
 ESTO DA FALLOOOO!!!
 

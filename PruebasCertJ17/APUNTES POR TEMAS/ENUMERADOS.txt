@@ -1,6 +1,6 @@
 //ENUMERADOS
 
-1) Cuando defines un enumerado, los tipos que lo componen Instancias del tipo
+1) Cuando defines un enumerado, los tipos que lo componen son Instancias del tipo
 
 2) No puedes heredar de un enumerado
 
@@ -17,7 +17,7 @@
 6) Ojo con la sintaxis del enumerado. Siempre debe acabar en PUNTO y COMA ;
    si está declarado dentro de una clase (como suele ser)
    
-7) El enumerado tiene un constructor privado (no puede tener público)
+7) El enumerado tiene un constructor implícitamente privado (no puede tener público)
 
 8) Lo primero del enumerado es su enuimración de tipos...siempre lo pRIMERO
 
